@@ -188,7 +188,7 @@ html, body {
 
 /* ===== DASHBOARD ===== */
 #dashboard {
-  display: none; /* Hidden by default, shown after Whop auth */
+  display: none;
   min-height: 100vh;
   padding: 120px 40px 60px;
 }
@@ -469,6 +469,17 @@ html, body {
   transform: scale(1.05);
 }
 
+/* ===== ACCESS EXPIRED MODAL ===== */
+#accessExpiredModal .modal-content {
+  border-color: #ff4b4b;
+}
+.expired-timer {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ff4b4b;
+  margin: 20px 0;
+}
+
 /* ===== UTILITY ===== */
 .back-button {
   position: absolute;
@@ -510,7 +521,13 @@ html, body {
   <div class="tabs">
     <a href="#features" class="tab">Features</a>
     <a href="#pricing" class="tab">Pricing</a>
-    <a href="#" class="tab" onclick="checkWhopAccess()">Dashboard</a>
+    <a href="#" class="tab" onclick="checkWhopAccess()" id="dashboardTab">Dashboard</a>
+  </div>
+  <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;" id="sessionInfo" style="display: none;">
+    <span id="sessionTimer" style="font-size: 14px; color: #666;"></span>
+    <button onclick="logout()" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+      Logout
+    </button>
   </div>
 </div>
 
@@ -554,10 +571,11 @@ html, body {
   <div class="dashboard-header">
     <h1>Welcome to Eon Dashboard</h1>
     <p class="welcome-message">Professional trading tools and AI-powered analysis at your fingertips. Real-time signals, portfolio tracking, and market insights.</p>
+    <p style="color: #666; font-size: 14px; margin-top: 10px;">Session expires in: <span id="dashboardTimer"></span></p>
   </div>
 
   <div class="dashboard-grid">
-    <!-- Live Signals Card -->
+    <!-- Dashboard cards remain the same -->
     <div class="dashboard-card">
       <div class="card-header">
         <div class="card-icon">
@@ -599,7 +617,6 @@ html, body {
       </div>
     </div>
 
-    <!-- AI Analysis Card -->
     <div class="dashboard-card ai-analysis">
       <div class="card-header">
         <div class="card-icon">
@@ -642,7 +659,6 @@ html, body {
       </div>
     </div>
 
-    <!-- Trading View Card -->
     <div class="dashboard-card">
       <div class="card-header">
         <div class="card-icon">
@@ -661,7 +677,6 @@ html, body {
       </div>
     </div>
 
-    <!-- Portfolio Tracker -->
     <div class="dashboard-card">
       <div class="card-header">
         <div class="card-icon">
@@ -697,28 +712,168 @@ html, body {
   </div>
 </div>
 
-<script>
-// ===== MULTI-LAYER WHOP DETECTION =====
-let whopAccessGranted = false;
-const WHOP_SECRET_KEY = "eon_" + btoa("whop_secure_2024").slice(0, 20) + "_algorithms";
+<!-- Access Expired Modal -->
+<div id="accessExpiredModal" class="modal">
+  <div class="modal-content">
+    <h2>⏰ Session Expired</h2>
+    <p>Your access has expired. Please log in again through Whop to continue using the dashboard.</p>
+    <div class="expired-timer" id="expiredTimer">Redirecting...</div>
+    <button class="modal-button" onclick="forceLogout()">Logout Now</button>
+  </div>
+</div>
 
+<script>
+// ===== ENHANCED SECURITY SYSTEM =====
+const SECURITY_CONFIG = {
+  SESSION_DURATION: 2 * 60 * 60 * 1000, // 2 hours in milliseconds
+  CHECK_INTERVAL: 30 * 1000, // Check every 30 seconds
+  TOKEN_SALT: "eon_secure_2024_" + btoa(window.location.hostname).slice(0, 10)
+};
+
+let sessionTimer = null;
+let securityCheckInterval = null;
+
+// ===== SECURE TOKEN GENERATION =====
+function generateSecureToken() {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2);
+  const hash = btoa(timestamp + SECURITY_CONFIG.TOKEN_SALT + random + navigator.userAgent);
+  return {
+    token: hash.slice(0, 50),
+    timestamp: timestamp,
+    expires: timestamp + SECURITY_CONFIG.SESSION_DURATION,
+    userAgent: navigator.userAgent,
+    referrer: document.referrer || 'direct'
+  };
+}
+
+function validateToken(tokenData) {
+  if (!tokenData) return false;
+  
+  const now = Date.now();
+  
+  // Check if token expired
+  if (now > tokenData.expires) {
+    console.log("Token expired");
+    return false;
+  }
+  
+  // Check if user agent changed (tab/window copy)
+  if (tokenData.userAgent !== navigator.userAgent) {
+    console.log("User agent mismatch");
+    return false;
+  }
+  
+  // Verify token integrity
+  const expectedHash = btoa(tokenData.timestamp + SECURITY_CONFIG.TOKEN_SALT + 
+                          tokenData.token.slice(10, 20) + tokenData.userAgent);
+  
+  return tokenData.token.startsWith(expectedHash.slice(0, 10));
+}
+
+// ===== SECURE SESSION MANAGEMENT =====
+function createSecureSession() {
+  const tokenData = generateSecureToken();
+  
+  // Store with multiple layers
+  localStorage.setItem('eon_session_token', JSON.stringify(tokenData));
+  localStorage.setItem('eon_session_active', 'true');
+  localStorage.setItem('eon_session_start', Date.now().toString());
+  
+  // Add to sessionStorage for tab-specific access
+  sessionStorage.setItem('eon_tab_token', tokenData.token.slice(0, 20));
+  
+  // Set cookie as additional layer (7 days expiry)
+  document.cookie = `eon_access=${tokenData.token.slice(0, 30)}; max-age=${7*24*60*60}; path=/; samesite=strict`;
+  
+  return tokenData;
+}
+
+function checkSession() {
+  const tokenData = JSON.parse(localStorage.getItem('eon_session_token') || 'null');
+  
+  if (!tokenData || !validateToken(tokenData)) {
+    // Session invalid or expired
+    endSession();
+    return false;
+  }
+  
+  // Check if session is about to expire (5 minutes warning)
+  const timeLeft = tokenData.expires - Date.now();
+  
+  if (timeLeft <= 5 * 60 * 1000 && timeLeft > 0) {
+    // Show warning if less than 5 minutes left
+    document.getElementById('sessionTimer').style.color = '#ff9900';
+  }
+  
+  if (timeLeft <= 0) {
+    showAccessExpired();
+    return false;
+  }
+  
+  return true;
+}
+
+function endSession() {
+  // Clear all storage
+  localStorage.removeItem('eon_session_token');
+  localStorage.removeItem('eon_session_active');
+  localStorage.removeItem('eon_session_start');
+  sessionStorage.removeItem('eon_tab_token');
+  
+  // Clear cookie
+  document.cookie = "eon_access=; max-age=0; path=/";
+  
+  // Stop timers
+  if (sessionTimer) clearInterval(sessionTimer);
+  if (securityCheckInterval) clearInterval(securityCheckInterval);
+  
+  // Return to home
+  goToHome();
+}
+
+function showAccessExpired() {
+  document.getElementById('accessExpiredModal').style.display = 'flex';
+  
+  // Auto-redirect after 10 seconds
+  let countdown = 10;
+  const timerElement = document.getElementById('expiredTimer');
+  
+  const countdownInterval = setInterval(() => {
+    timerElement.textContent = `Redirecting in ${countdown}s...`;
+    countdown--;
+    
+    if (countdown < 0) {
+      clearInterval(countdownInterval);
+      forceLogout();
+    }
+  }, 1000);
+}
+
+function forceLogout() {
+  endSession();
+  document.getElementById('accessExpiredModal').style.display = 'none';
+}
+
+// ===== UPDATED WHOP ACCESS CHECK =====
 function checkWhopAccess() {
-  // Layer 1: Check URL parameters
+  // First check if we have a valid session
+  if (checkSession()) {
+    showDashboard();
+    return true;
+  }
+  
+  // No valid session, check Whop access
   const urlParams = new URLSearchParams(window.location.search);
   const hasWhopToken = urlParams.get('whop_token') || 
-                       urlParams.get('token') || 
-                       urlParams.get('access_key');
+                       urlParams.get('access_key') ||
+                       urlParams.get('whop_user');
   
-  // Layer 2: Check referrer
   const referrer = document.referrer;
-  const isFromWhopDomain = referrer.includes('whop.com') || 
-                          referrer.includes('whop.io') ||
-                          referrer.includes('whop.gg');
+  const isFromWhop = referrer.includes('whop.com') || 
+                    referrer.includes('whop.io') ||
+                    referrer.includes('whop.gg');
   
-  // Layer 3: Check localStorage
-  const storedAccess = localStorage.getItem(WHOP_SECRET_KEY);
-  
-  // Layer 4: Check if in iframe
   let isInIframe = false;
   try {
     isInIframe = window.self !== window.top;
@@ -726,47 +881,105 @@ function checkWhopAccess() {
     isInIframe = true;
   }
   
-  // Grant access if ANY of these conditions are met
-  if (hasWhopToken || isFromWhopDomain || storedAccess === 'granted' || isInIframe) {
-    // Store access for future sessions
-    localStorage.setItem(WHOP_SECRET_KEY, 'granted');
+  // Grant access if coming from Whop
+  if (hasWhopToken || isFromWhop || isInIframe) {
+    // Create new secure session
+    createSecureSession();
     
-    // Show dashboard, hide home page
+    // Clean URL parameters
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+    
     showDashboard();
     return true;
   }
   
-  // If no access, show modal
+  // No access
   showAccessDenied();
   return false;
 }
 
+// ===== DASHBOARD FUNCTIONS =====
 function showDashboard() {
+  if (!checkSession()) {
+    return;
+  }
+  
   document.getElementById('homePage').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   document.getElementById('backButton').style.display = 'flex';
+  document.getElementById('sessionInfo').style.display = 'flex';
   
-  // Update tab links
-  document.querySelectorAll('.tab').forEach(tab => {
+  // Update tab
+  document.getElementById('dashboardTab').style.display = 'none';
+  document.querySelectorAll('.tab:not(#dashboardTab)').forEach(tab => {
     tab.style.display = 'none';
   });
   
-  // Scroll to top
+  // Start session timer
+  startSessionTimer();
+  
+  // Start security checks
+  securityCheckInterval = setInterval(() => {
+    if (!checkSession()) {
+      clearInterval(securityCheckInterval);
+    }
+  }, SECURITY_CONFIG.CHECK_INTERVAL);
+  
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function startSessionTimer() {
+  const tokenData = JSON.parse(localStorage.getItem('eon_session_token'));
+  if (!tokenData) return;
+  
+  sessionTimer = setInterval(() => {
+    const timeLeft = tokenData.expires - Date.now();
+    
+    if (timeLeft <= 0) {
+      clearInterval(sessionTimer);
+      showAccessExpired();
+      return;
+    }
+    
+    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    
+    const timerString = `${hours}h ${minutes}m ${seconds}s`;
+    document.getElementById('sessionTimer').textContent = timerString;
+    document.getElementById('dashboardTimer').textContent = timerString;
+    
+    // Color coding
+    const timerElement = document.getElementById('sessionTimer');
+    if (timeLeft < 5 * 60 * 1000) { // Less than 5 minutes
+      timerElement.style.color = '#ff4b4b';
+    } else if (timeLeft < 15 * 60 * 1000) { // Less than 15 minutes
+      timerElement.style.color = '#ff9900';
+    }
+  }, 1000);
+}
+
 function goToHome() {
+  endSession();
+  
   document.getElementById('homePage').style.display = 'block';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('backButton').style.display = 'none';
+  document.getElementById('sessionInfo').style.display = 'none';
   
-  // Restore tab links
+  // Restore tabs
   document.querySelectorAll('.tab').forEach(tab => {
     tab.style.display = 'block';
   });
   
-  // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function logout() {
+  if (confirm("Are you sure you want to logout? You'll need to access through Whop again.")) {
+    endSession();
+  }
 }
 
 function showAccessDenied() {
@@ -778,32 +991,32 @@ function closeModal() {
   document.getElementById('userNotFoundModal').style.display = 'none';
 }
 
-// ===== PAGE LOAD CHECKS =====
+// ===== INITIALIZATION =====
 window.addEventListener('load', function() {
-  // Auto-detect Whop access on page load
+  // Check for Whop token on load
   const urlParams = new URLSearchParams(window.location.search);
   const whopToken = urlParams.get('whop_token');
   
   if (whopToken) {
-    // Store for future
-    localStorage.setItem(WHOP_SECRET_KEY, 'granted');
-    
-    // Clean up URL
+    // Clean URL first
     const cleanUrl = window.location.origin + window.location.pathname;
     window.history.replaceState({}, document.title, cleanUrl);
     
-    // Auto-show dashboard
+    // Create session and show dashboard
+    createSecureSession();
     setTimeout(() => {
       showDashboard();
     }, 500);
+  } else if (checkSession()) {
+    // Valid session exists, show dashboard
+    showDashboard();
   }
   
-  // Update signals every 10 seconds (demo)
+  // Update signals demo
   setInterval(updateSignals, 10000);
 });
 
 function updateSignals() {
-  // Simulate live signal updates
   const signals = document.querySelectorAll('.signal-price');
   signals.forEach(signal => {
     const current = parseFloat(signal.textContent.replace('$', '').replace(',', ''));
@@ -813,28 +1026,45 @@ function updateSignals() {
   });
 }
 
-// ===== PROTECTION MEASURES =====
+// ===== SECURITY PROTECTIONS =====
 document.addEventListener('keydown', function(e) {
-  // F12
-  if (e.keyCode === 123) {
+  if (e.keyCode === 123 || // F12
+      (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+      (e.ctrlKey && e.keyCode === 85)) { // Ctrl+U
     e.preventDefault();
-    return false;
-  }
-  // Ctrl+Shift+I
-  if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
-    e.preventDefault();
-    return false;
-  }
-  // Ctrl+U
-  if (e.ctrlKey && e.keyCode === 85) {
-    e.preventDefault();
+    
+    // Additional protection: If in dashboard and trying to inspect, log out
+    if (document.getElementById('dashboard').style.display === 'block') {
+      setTimeout(() => {
+        if (confirm("Security violation detected. Logging out for security.")) {
+          endSession();
+        }
+      }, 100);
+    }
+    
     return false;
   }
 });
 
 document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-  return false;
+  if (document.getElementById('dashboard').style.display === 'block') {
+    e.preventDefault();
+    
+    // Log suspicious activity
+    console.warn("Right-click attempted on dashboard");
+    
+    // Increment violation counter
+    let violations = parseInt(localStorage.getItem('eon_violations') || '0');
+    violations++;
+    localStorage.setItem('eon_violations', violations.toString());
+    
+    if (violations > 3) {
+      alert("Multiple security violations detected. Logging out.");
+      endSession();
+    }
+    
+    return false;
+  }
 });
 
 // ===== BUY BUTTON =====
@@ -843,18 +1073,4 @@ document.querySelector('.button').addEventListener('click', function() {
 });
 
 // ===== MODAL CLOSE HANDLERS =====
-document.getElementById('userNotFoundModal').addEventListener('click', function(e) {
-  if (e.target === this) {
-    closeModal();
-  }
-});
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeModal();
-  }
-});
-</script>
-
-</body>
-</html>
+document.getElementById('userNotFoundModal').addEventListener('click', function(e)
