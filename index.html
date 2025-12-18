@@ -502,6 +502,14 @@ html, body {
   background: #e2e8f0;
 }
 
+#sessionInfo {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  display: none;
+}
+
 </style>
 </head>
 
@@ -519,11 +527,11 @@ html, body {
     Back to Home
   </button>
   <div class="tabs">
-    <a href="#features" class="tab">Features</a>
-    <a href="#pricing" class="tab">Pricing</a>
-    <a href="#" class="tab" onclick="checkWhopAccess()" id="dashboardTab">Dashboard</a>
+    <a href="#features" class="tab" id="featuresTab">Features</a>
+    <a href="#pricing" class="tab" id="pricingTab">Pricing</a>
+    <a href="#" class="tab" id="dashboardTab">Dashboard</a>
   </div>
-  <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;" id="sessionInfo" style="display: none;">
+  <div id="sessionInfo">
     <span id="sessionTimer" style="font-size: 14px; color: #666;"></span>
     <button onclick="logout()" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
       Logout
@@ -561,7 +569,7 @@ html, body {
         <li><span class="check"><svg class="check_svg" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> AI Analysis</li>
         <li><span class="check"><svg class="check_svg" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Portfolio Tracking</li>
       </ul>
-      <button class="button">Buy</button>
+      <button class="button" id="buyButton">Buy</button>
     </div>
   </div>
 </div>
@@ -575,7 +583,6 @@ html, body {
   </div>
 
   <div class="dashboard-grid">
-    <!-- Dashboard cards remain the same -->
     <div class="dashboard-card">
       <div class="card-header">
         <div class="card-icon">
@@ -803,7 +810,9 @@ function checkSession() {
   
   if (timeLeft <= 5 * 60 * 1000 && timeLeft > 0) {
     // Show warning if less than 5 minutes left
-    document.getElementById('sessionTimer').style.color = '#ff9900';
+    if (document.getElementById('sessionTimer')) {
+      document.getElementById('sessionTimer').style.color = '#ff9900';
+    }
   }
   
   if (timeLeft <= 0) {
@@ -857,8 +866,11 @@ function forceLogout() {
 
 // ===== UPDATED WHOP ACCESS CHECK =====
 function checkWhopAccess() {
+  console.log("Dashboard clicked - checking access...");
+  
   // First check if we have a valid session
   if (checkSession()) {
+    console.log("Valid session found, showing dashboard");
     showDashboard();
     return true;
   }
@@ -883,6 +895,7 @@ function checkWhopAccess() {
   
   // Grant access if coming from Whop
   if (hasWhopToken || isFromWhop || isInIframe) {
+    console.log("Whop access detected, creating session");
     // Create new secure session
     createSecureSession();
     
@@ -895,6 +908,7 @@ function checkWhopAccess() {
   }
   
   // No access
+  console.log("No Whop access found, showing denial modal");
   showAccessDenied();
   return false;
 }
@@ -902,9 +916,11 @@ function checkWhopAccess() {
 // ===== DASHBOARD FUNCTIONS =====
 function showDashboard() {
   if (!checkSession()) {
+    console.log("Session check failed, not showing dashboard");
     return;
   }
   
+  console.log("Showing dashboard");
   document.getElementById('homePage').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   document.getElementById('backButton').style.display = 'flex';
@@ -912,9 +928,8 @@ function showDashboard() {
   
   // Update tab
   document.getElementById('dashboardTab').style.display = 'none';
-  document.querySelectorAll('.tab:not(#dashboardTab)').forEach(tab => {
-    tab.style.display = 'none';
-  });
+  document.getElementById('featuresTab').style.display = 'none';
+  document.getElementById('pricingTab').style.display = 'none';
   
   // Start session timer
   startSessionTimer();
@@ -933,6 +948,9 @@ function startSessionTimer() {
   const tokenData = JSON.parse(localStorage.getItem('eon_session_token'));
   if (!tokenData) return;
   
+  // Clear any existing timer
+  if (sessionTimer) clearInterval(sessionTimer);
+  
   sessionTimer = setInterval(() => {
     const timeLeft = tokenData.expires - Date.now();
     
@@ -947,21 +965,28 @@ function startSessionTimer() {
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
     
     const timerString = `${hours}h ${minutes}m ${seconds}s`;
-    document.getElementById('sessionTimer').textContent = timerString;
-    document.getElementById('dashboardTimer').textContent = timerString;
+    
+    const sessionTimerEl = document.getElementById('sessionTimer');
+    const dashboardTimerEl = document.getElementById('dashboardTimer');
+    
+    if (sessionTimerEl) sessionTimerEl.textContent = timerString;
+    if (dashboardTimerEl) dashboardTimerEl.textContent = timerString;
     
     // Color coding
-    const timerElement = document.getElementById('sessionTimer');
     if (timeLeft < 5 * 60 * 1000) { // Less than 5 minutes
-      timerElement.style.color = '#ff4b4b';
+      if (sessionTimerEl) sessionTimerEl.style.color = '#ff4b4b';
     } else if (timeLeft < 15 * 60 * 1000) { // Less than 15 minutes
-      timerElement.style.color = '#ff9900';
+      if (sessionTimerEl) sessionTimerEl.style.color = '#ff9900';
     }
   }, 1000);
 }
 
 function goToHome() {
-  endSession();
+  console.log("Going to home page");
+  
+  // Clear timers first
+  if (sessionTimer) clearInterval(sessionTimer);
+  if (securityCheckInterval) clearInterval(securityCheckInterval);
   
   document.getElementById('homePage').style.display = 'block';
   document.getElementById('dashboard').style.display = 'none';
@@ -969,9 +994,13 @@ function goToHome() {
   document.getElementById('sessionInfo').style.display = 'none';
   
   // Restore tabs
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.style.display = 'block';
-  });
+  document.getElementById('dashboardTab').style.display = 'block';
+  document.getElementById('featuresTab').style.display = 'block';
+  document.getElementById('pricingTab').style.display = 'block';
+  
+  // Clear session data but keep token for next time
+  // Don't call endSession() here because we want to keep the token alive
+  // for when user clicks Dashboard again
   
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -984,7 +1013,6 @@ function logout() {
 
 function showAccessDenied() {
   document.getElementById('userNotFoundModal').style.display = 'flex';
-  document.getElementById('userNotFoundModal').addEventListener('contextmenu', e => e.preventDefault());
 }
 
 function closeModal() {
@@ -993,11 +1021,24 @@ function closeModal() {
 
 // ===== INITIALIZATION =====
 window.addEventListener('load', function() {
+  console.log("Page loaded, initializing...");
+  
+  // Setup event listeners
+  document.getElementById('dashboardTab').addEventListener('click', function(e) {
+    e.preventDefault();
+    checkWhopAccess();
+  });
+  
+  document.getElementById('buyButton').addEventListener('click', function() {
+    window.open('https://whop.com/your-product-link', '_blank');
+  });
+  
   // Check for Whop token on load
   const urlParams = new URLSearchParams(window.location.search);
   const whopToken = urlParams.get('whop_token');
   
   if (whopToken) {
+    console.log("Whop token detected on page load");
     // Clean URL first
     const cleanUrl = window.location.origin + window.location.pathname;
     window.history.replaceState({}, document.title, cleanUrl);
@@ -1009,7 +1050,10 @@ window.addEventListener('load', function() {
     }, 500);
   } else if (checkSession()) {
     // Valid session exists, show dashboard
+    console.log("Valid session found on load, showing dashboard");
     showDashboard();
+  } else {
+    console.log("No session found, showing home page");
   }
   
   // Update signals demo
@@ -1065,11 +1109,6 @@ document.addEventListener('contextmenu', function(e) {
     
     return false;
   }
-});
-
-// ===== BUY BUTTON =====
-document.querySelector('.button').addEventListener('click', function() {
-  window.open('https://whop.com/your-product-link', '_blank');
 });
 
 // ===== MODAL CLOSE HANDLERS =====
