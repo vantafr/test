@@ -1073,4 +1073,40 @@ document.querySelector('.button').addEventListener('click', function() {
 });
 
 // ===== MODAL CLOSE HANDLERS =====
-document.getElementById('userNotFoundModal').addEventListener('click', function(e)
+document.getElementById('userNotFoundModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+
+document.getElementById('accessExpiredModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    forceLogout();
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModal();
+    document.getElementById('accessExpiredModal').style.display = 'none';
+  }
+});
+
+// ===== TAB/BROWSER CLOSE DETECTION =====
+window.addEventListener('beforeunload', function(e) {
+  if (document.getElementById('dashboard').style.display === 'block') {
+    // Don't show prompt for regular navigation
+    return;
+  }
+});
+
+window.addEventListener('pagehide', function() {
+  if (document.getElementById('dashboard').style.display === 'block') {
+    // Clear sessionStorage when leaving dashboard (prevents tab copying)
+    sessionStorage.removeItem('eon_tab_token');
+  }
+});
+</script>
+
+</body>
+</html>
