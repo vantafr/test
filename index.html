@@ -56,6 +56,7 @@ html, body {
   text-decoration: none;
   color: #0f0f0f;
   font-weight: 500;
+  cursor: pointer;
 }
 .tab:hover {
   color: #5DD62C;
@@ -158,6 +159,46 @@ html, body {
   border: none;
   background: linear-gradient(90deg, #5DD62C, #a6ff75);
   font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===== MODAL ===== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+.modal h2 {
+  color: #0f0f0f;
+  margin-bottom: 20px;
+}
+.modal p {
+  color: #666;
+  margin-bottom: 30px;
+}
+.modal-button {
+  background: linear-gradient(90deg, #5DD62C, #a6ff75);
+  color: #0f0f0f;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -171,8 +212,8 @@ html, body {
   <div class="tabs">
     <a href="#features" class="tab">Features</a>
     <a href="#pricing" class="tab">Pricing</a>
-    <!-- IMPORTANT -->
-    <a href="/auth/whop" class="tab">Dashboard</a>
+    <!-- IMPORTANT: Dashboard link with click handler -->
+    <a href="#" class="tab" onclick="checkWhopAccess()">Dashboard</a>
   </div>
 </div>
 
@@ -204,6 +245,100 @@ html, body {
     <button class="button">Buy</button>
   </div>
 </div>
+
+<!-- User Not Found Modal -->
+<div id="userNotFoundModal" class="modal">
+  <div class="modal-content">
+    <h2>User Not Found</h2>
+    <p>Please access this dashboard through Whop to continue.</p>
+    <button class="modal-button" onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+<script>
+// Function to check if user is coming from Whop
+function checkWhopAccess() {
+  // Check if the page was launched through Whop
+  // This can be done by checking referrer, URL parameters, or localStorage
+  const isFromWhop = checkWhopOrigin();
+  
+  if (isFromWhop) {
+    // Allow access to dashboard
+    window.location.href = "/auth/whop";
+  } else {
+    // Show "User Not Found" modal
+    document.getElementById('userNotFoundModal').style.display = 'flex';
+  }
+}
+
+// Function to check Whop origin (simplified - you'll need to adjust based on how Whop launches your site)
+function checkWhopOrigin() {
+  // Method 1: Check referrer (if Whop redirects to your site)
+  const referrer = document.referrer;
+  if (referrer.includes('whop.com') || referrer.includes('whop.io')) {
+    return true;
+  }
+  
+  // Method 2: Check URL parameters (if Whop adds a token or parameter)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('whop_token') || urlParams.get('whop_user')) {
+    return true;
+  }
+  
+  // Method 3: Check localStorage (if user previously authenticated)
+  const whopSession = localStorage.getItem('whop_session');
+  if (whopSession) {
+    return true;
+  }
+  
+  // Method 4: Check for Whop's iframe context (if embedded in Whop)
+  try {
+    if (window.self !== window.top) {
+      // Site is in an iframe - could be Whop
+      // You might want to verify the parent domain
+      return true;
+    }
+  } catch (e) {
+    // Cross-origin error means we're in an iframe from different domain
+    return true;
+  }
+  
+  return false;
+}
+
+// Function to close modal
+function closeModal() {
+  document.getElementById('userNotFoundModal').style.display = 'none';
+}
+
+// Optional: Add click handler to Buy button
+document.querySelector('.button').addEventListener('click', function() {
+  alert('Redirecting to purchase page...');
+  // window.location.href = "your-purchase-link";
+});
+
+// Optional: Auto-detect and store Whop session on page load
+window.addEventListener('load', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const whopToken = urlParams.get('whop_token');
+  
+  if (whopToken) {
+    // Store the token for future sessions
+    localStorage.setItem('whop_session', whopToken);
+    
+    // Clean URL (remove token from address bar)
+    const cleanUrl = window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
+});
+
+// Close modal when clicking outside
+document.getElementById('userNotFoundModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+</script>
 
 </body>
 </html>
