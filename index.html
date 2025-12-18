@@ -42,6 +42,7 @@ html, body {
   align-items: center;
   padding: 0 32px;
   z-index: 20;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
 }
 .logo { height: 80px; }
 
@@ -57,6 +58,7 @@ html, body {
   color: #0f0f0f;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 .tab:hover {
   color: #5DD62C;
@@ -68,7 +70,10 @@ html, body {
   margin-top: 140px;
   text-align: center;
 }
-.hero h1 { font-size: 48px; }
+.hero h1 { 
+  font-size: 48px; 
+  margin: 0;
+}
 .highlight {
   display: block;
   background: linear-gradient(90deg, #5DD62C, #a6ff75);
@@ -94,6 +99,10 @@ html, body {
   border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 25px 70px rgba(0,0,0,.15);
+  transition: transform 0.3s ease;
+}
+.feature-card:hover {
+  transform: translateY(-10px);
 }
 .feature-card img {
   width: 100%;
@@ -126,8 +135,17 @@ html, body {
   border-radius: 1rem;
   color: white;
   box-shadow: 0 0 25px rgba(93,214,44,.25);
+  transition: transform 0.3s ease;
 }
-.card_title { font-size: 1.1rem; font-weight: 600; }
+.card:hover {
+  transform: scale(1.05);
+}
+.card_title { 
+  font-size: 1.1rem; 
+  font-weight: 600; 
+  display: block;
+  margin-bottom: 1rem;
+}
 .card__list {
   list-style: none;
   padding: 0;
@@ -143,6 +161,7 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-right: 8px;
 }
 .check_svg {
   width: 12px;
@@ -160,6 +179,246 @@ html, body {
   background: linear-gradient(90deg, #5DD62C, #a6ff75);
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(93,214,44,.4);
+}
+
+/* ===== DASHBOARD ===== */
+#dashboard {
+  display: none; /* Hidden by default, shown after Whop auth */
+  min-height: 100vh;
+  padding: 120px 40px 60px;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.dashboard-header h1 {
+  font-size: 42px;
+  margin-bottom: 20px;
+  color: #0f0f0f;
+}
+
+.welcome-message {
+  font-size: 18px;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(93,214,44,0.1);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  border-color: rgba(93,214,44,0.3);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.card-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #5DD62C, #a6ff75);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.card-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+  stroke-width: 2;
+  fill: none;
+}
+
+.card-header h3 {
+  font-size: 22px;
+  color: #0f0f0f;
+  margin: 0;
+}
+
+.card-content {
+  color: #555;
+  line-height: 1.6;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.stat-item {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #5DD62C;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.signal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.signal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.signal-item:last-child {
+  border-bottom: none;
+}
+
+.signal-pair {
+  font-weight: 600;
+  color: #0f0f0f;
+}
+
+.signal-type {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.signal-buy {
+  background: rgba(93,214,44,0.1);
+  color: #5DD62C;
+}
+
+.signal-sell {
+  background: rgba(255,75,75,0.1);
+  color: #ff4b4b;
+}
+
+.signal-price {
+  font-weight: 600;
+  color: #0f0f0f;
+}
+
+.trading-view-container {
+  height: 400px;
+  background: #f8fafc;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 18px;
+}
+
+.ai-analysis {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: white;
+}
+
+.ai-analysis .card-header h3 {
+  color: white;
+}
+
+.ai-analysis .card-content {
+  color: #aaa;
+}
+
+.ai-prediction {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.prediction-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #5DD62C;
+  margin-bottom: 10px;
+}
+
+.recent-activity {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(93,214,44,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.activity-details {
+  flex: 1;
+}
+
+.activity-action {
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.activity-time {
+  font-size: 12px;
+  color: #aaa;
 }
 
 /* ===== MODAL ===== */
@@ -170,26 +429,30 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   z-index: 1000;
   justify-content: center;
   align-items: center;
 }
 .modal-content {
-  background: white;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
   padding: 40px;
   border-radius: 20px;
   text-align: center;
   max-width: 400px;
   width: 90%;
+  border: 2px solid #5DD62C;
+  box-shadow: 0 0 50px rgba(93,214,44,.3);
 }
 .modal h2 {
-  color: #0f0f0f;
+  color: #fff;
   margin-bottom: 20px;
+  font-size: 28px;
 }
 .modal p {
-  color: #666;
+  color: #aaa;
   margin-bottom: 30px;
+  line-height: 1.5;
 }
 .modal-button {
   background: linear-gradient(90deg, #5DD62C, #a6ff75);
@@ -199,7 +462,35 @@ html, body {
   border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s;
 }
+.modal-button:hover {
+  transform: scale(1.05);
+}
+
+/* ===== UTILITY ===== */
+.back-button {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #f8fafc;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: #e2e8f0;
+}
+
 </style>
 </head>
 
@@ -207,134 +498,359 @@ html, body {
 
 <div class="grid-wrapper"><div class="grid-background"></div></div>
 
+<!-- Top Bar -->
 <div class="top-bar">
   <img class="logo" src="https://i.pinimg.com/736x/a4/e4/b5/a4e4b5b5a171600c5de2185f2e077a0f.jpg">
+  <button class="back-button" onclick="goToHome()" id="backButton" style="display: none;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back to Home
+  </button>
   <div class="tabs">
     <a href="#features" class="tab">Features</a>
     <a href="#pricing" class="tab">Pricing</a>
-    <!-- IMPORTANT: Dashboard link with click handler -->
     <a href="#" class="tab" onclick="checkWhopAccess()">Dashboard</a>
   </div>
 </div>
 
-<div class="hero">
-  <h1>Trade and Analyse like a
-    <span class="highlight">Pro With Eon Algorithms</span>
-  </h1>
-</div>
+<!-- Home Page Content -->
+<div id="homePage">
+  <div class="hero">
+    <h1>Trade and Analyse like a
+      <span class="highlight">Pro With Eon Algorithms</span>
+    </h1>
+  </div>
 
-<div id="features">
-  <div class="features-row">
-    <div class="feature-card">
-      <img src="https://i.pinimg.com/736x/2e/e5/1f/2ee51f71aed0339cc5fbe49d7b8553a6.jpg">
-      <div class="feature-label">Eon Signals</div>
+  <div id="features">
+    <div class="features-row">
+      <div class="feature-card">
+        <img src="https://i.pinimg.com/736x/2e/e5/1f/2ee51f71aed0339cc5fbe49d7b8553a6.jpg">
+        <div class="feature-label">Eon Signals</div>
+      </div>
+      <div class="feature-card">
+        <img src="https://i.pinimg.com/736x/40/93/e9/4093e9a25a025fb0e8014163c9690c29.jpg">
+        <div class="feature-label">AI Chart Analysis</div>
+      </div>
     </div>
-    <div class="feature-card">
-      <img src="https://i.pinimg.com/736x/40/93/e9/4093e9a25a025fb0e8014163c9690c29.jpg">
-      <div class="feature-label">AI Chart Analysis</div>
+  </div>
+
+  <div id="pricing">
+    <div class="card">
+      <span class="card_title">Beta</span>
+      <ul class="card__list">
+        <li><span class="check"><svg class="check_svg" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Full Dashboard</li>
+        <li><span class="check"><svg class="check_svg" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Live Trading Signals</li>
+        <li><span class="check"><svg class="check_svg" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> AI Analysis</li>
+        <li><span class="check"><svg class="check_svg" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Portfolio Tracking</li>
+      </ul>
+      <button class="button">Buy</button>
     </div>
   </div>
 </div>
 
-<div id="pricing">
-  <div class="card">
-    <span class="card_title">Beta</span>
-    <ul class="card__list">
-      <li><span class="check"><svg class="check_svg" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Full Dashboard</li>
-    </ul>
-    <button class="button">Buy</button>
+<!-- Dashboard Content (Hidden by default) -->
+<div id="dashboard">
+  <div class="dashboard-header">
+    <h1>Welcome to Eon Dashboard</h1>
+    <p class="welcome-message">Professional trading tools and AI-powered analysis at your fingertips. Real-time signals, portfolio tracking, and market insights.</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Live Signals Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <h3>Live Trading Signals</h3>
+      </div>
+      <div class="card-content">
+        <p>Real-time buy/sell signals with high accuracy predictions.</p>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">94%</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Live Signals</div>
+          </div>
+        </div>
+        <ul class="signal-list">
+          <li class="signal-item">
+            <span class="signal-pair">BTC/USDT</span>
+            <span class="signal-type signal-buy">BUY</span>
+            <span class="signal-price">$43,250</span>
+          </li>
+          <li class="signal-item">
+            <span class="signal-pair">ETH/USDT</span>
+            <span class="signal-type signal-sell">SELL</span>
+            <span class="signal-price">$2,340</span>
+          </li>
+          <li class="signal-item">
+            <span class="signal-pair">SOL/USDT</span>
+            <span class="signal-type signal-buy">BUY</span>
+            <span class="signal-price">$98.50</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AI Analysis Card -->
+    <div class="dashboard-card ai-analysis">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3>AI Market Analysis</h3>
+      </div>
+      <div class="card-content">
+        <p>Advanced AI algorithms analyzing market trends and predicting movements.</p>
+        <div class="ai-prediction">
+          <div class="prediction-value">+2.8%</div>
+          <p>Predicted market movement for next 24 hours</p>
+        </div>
+        <div class="recent-activity">
+          <div class="activity-item">
+            <div class="activity-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <div class="activity-details">
+              <div class="activity-action">Bullish trend detected</div>
+              <div class="activity-time">2 minutes ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div class="activity-details">
+              <div class="activity-action">Volume spike analyzed</div>
+              <div class="activity-time">15 minutes ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trading View Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 3v18h18M7 16l4-4 4 4 6-6"/>
+          </svg>
+        </div>
+        <h3>Live Charts</h3>
+      </div>
+      <div class="card-content">
+        <div class="trading-view-container">
+          Interactive Trading Charts
+          <br>
+          <small>(Real-time data feed connected)</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portfolio Tracker -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3>Portfolio Tracker</h3>
+      </div>
+      <div class="card-content">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">$24,580</div>
+            <div class="stat-label">Total Value</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">+12.5%</div>
+            <div class="stat-label">24h Change</div>
+          </div>
+        </div>
+        <p style="margin-top: 20px; font-size: 14px;">Connected to your exchange accounts for real-time tracking.</p>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- User Not Found Modal -->
 <div id="userNotFoundModal" class="modal">
   <div class="modal-content">
-    <h2>User Not Found</h2>
-    <p>Please access this dashboard through Whop to continue.</p>
-    <button class="modal-button" onclick="closeModal()">OK</button>
+    <h2>🔒 Access Denied</h2>
+    <p>This dashboard is exclusively available to Eon Algorithms members through Whop.<br><br>Please purchase access or log in through Whop to continue.</p>
+    <button class="modal-button" onclick="closeModal()">Got It</button>
   </div>
 </div>
 
 <script>
-// Function to check if user is coming from Whop
-function checkWhopAccess() {
-  // Check if the page was launched through Whop
-  // This can be done by checking referrer, URL parameters, or localStorage
-  const isFromWhop = checkWhopOrigin();
-  
-  if (isFromWhop) {
-    // Allow access to dashboard
-    window.location.href = "/auth/whop";
-  } else {
-    // Show "User Not Found" modal
-    document.getElementById('userNotFoundModal').style.display = 'flex';
-  }
-}
+// ===== MULTI-LAYER WHOP DETECTION =====
+let whopAccessGranted = false;
+const WHOP_SECRET_KEY = "eon_" + btoa("whop_secure_2024").slice(0, 20) + "_algorithms";
 
-// Function to check Whop origin (simplified - you'll need to adjust based on how Whop launches your site)
-function checkWhopOrigin() {
-  // Method 1: Check referrer (if Whop redirects to your site)
-  const referrer = document.referrer;
-  if (referrer.includes('whop.com') || referrer.includes('whop.io')) {
-    return true;
-  }
-  
-  // Method 2: Check URL parameters (if Whop adds a token or parameter)
+function checkWhopAccess() {
+  // Layer 1: Check URL parameters
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('whop_token') || urlParams.get('whop_user')) {
-    return true;
-  }
+  const hasWhopToken = urlParams.get('whop_token') || 
+                       urlParams.get('token') || 
+                       urlParams.get('access_key');
   
-  // Method 3: Check localStorage (if user previously authenticated)
-  const whopSession = localStorage.getItem('whop_session');
-  if (whopSession) {
-    return true;
-  }
+  // Layer 2: Check referrer
+  const referrer = document.referrer;
+  const isFromWhopDomain = referrer.includes('whop.com') || 
+                          referrer.includes('whop.io') ||
+                          referrer.includes('whop.gg');
   
-  // Method 4: Check for Whop's iframe context (if embedded in Whop)
+  // Layer 3: Check localStorage
+  const storedAccess = localStorage.getItem(WHOP_SECRET_KEY);
+  
+  // Layer 4: Check if in iframe
+  let isInIframe = false;
   try {
-    if (window.self !== window.top) {
-      // Site is in an iframe - could be Whop
-      // You might want to verify the parent domain
-      return true;
-    }
+    isInIframe = window.self !== window.top;
   } catch (e) {
-    // Cross-origin error means we're in an iframe from different domain
+    isInIframe = true;
+  }
+  
+  // Grant access if ANY of these conditions are met
+  if (hasWhopToken || isFromWhopDomain || storedAccess === 'granted' || isInIframe) {
+    // Store access for future sessions
+    localStorage.setItem(WHOP_SECRET_KEY, 'granted');
+    
+    // Show dashboard, hide home page
+    showDashboard();
     return true;
   }
   
+  // If no access, show modal
+  showAccessDenied();
   return false;
 }
 
-// Function to close modal
+function showDashboard() {
+  document.getElementById('homePage').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('backButton').style.display = 'flex';
+  
+  // Update tab links
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.style.display = 'none';
+  });
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToHome() {
+  document.getElementById('homePage').style.display = 'block';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('backButton').style.display = 'none';
+  
+  // Restore tab links
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.style.display = 'block';
+  });
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showAccessDenied() {
+  document.getElementById('userNotFoundModal').style.display = 'flex';
+  document.getElementById('userNotFoundModal').addEventListener('contextmenu', e => e.preventDefault());
+}
+
 function closeModal() {
   document.getElementById('userNotFoundModal').style.display = 'none';
 }
 
-// Optional: Add click handler to Buy button
-document.querySelector('.button').addEventListener('click', function() {
-  alert('Redirecting to purchase page...');
-  // window.location.href = "your-purchase-link";
-});
-
-// Optional: Auto-detect and store Whop session on page load
+// ===== PAGE LOAD CHECKS =====
 window.addEventListener('load', function() {
+  // Auto-detect Whop access on page load
   const urlParams = new URLSearchParams(window.location.search);
   const whopToken = urlParams.get('whop_token');
   
   if (whopToken) {
-    // Store the token for future sessions
-    localStorage.setItem('whop_session', whopToken);
+    // Store for future
+    localStorage.setItem(WHOP_SECRET_KEY, 'granted');
     
-    // Clean URL (remove token from address bar)
-    const cleanUrl = window.location.pathname;
+    // Clean up URL
+    const cleanUrl = window.location.origin + window.location.pathname;
     window.history.replaceState({}, document.title, cleanUrl);
+    
+    // Auto-show dashboard
+    setTimeout(() => {
+      showDashboard();
+    }, 500);
+  }
+  
+  // Update signals every 10 seconds (demo)
+  setInterval(updateSignals, 10000);
+});
+
+function updateSignals() {
+  // Simulate live signal updates
+  const signals = document.querySelectorAll('.signal-price');
+  signals.forEach(signal => {
+    const current = parseFloat(signal.textContent.replace('$', '').replace(',', ''));
+    const change = (Math.random() - 0.5) * 100;
+    const newPrice = current + change;
+    signal.textContent = '$' + newPrice.toFixed(2);
+  });
+}
+
+// ===== PROTECTION MEASURES =====
+document.addEventListener('keydown', function(e) {
+  // F12
+  if (e.keyCode === 123) {
+    e.preventDefault();
+    return false;
+  }
+  // Ctrl+Shift+I
+  if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+    e.preventDefault();
+    return false;
+  }
+  // Ctrl+U
+  if (e.ctrlKey && e.keyCode === 85) {
+    e.preventDefault();
+    return false;
   }
 });
 
-// Close modal when clicking outside
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  return false;
+});
+
+// ===== BUY BUTTON =====
+document.querySelector('.button').addEventListener('click', function() {
+  window.open('https://whop.com/your-product-link', '_blank');
+});
+
+// ===== MODAL CLOSE HANDLERS =====
 document.getElementById('userNotFoundModal').addEventListener('click', function(e) {
   if (e.target === this) {
+    closeModal();
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
     closeModal();
   }
 });
