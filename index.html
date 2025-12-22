@@ -186,11 +186,91 @@ html, body {
   box-shadow: 0 5px 20px rgba(93,214,44,.4);
 }
 
-/* ===== DASHBOARD ===== */
+/* ===== DASHBOARD LAYOUT ===== */
 #dashboard {
   display: none;
   min-height: 100vh;
-  padding: 120px 40px 60px;
+  padding: 120px 0 60px;
+}
+
+/* Dashboard Container with Sidebar */
+.dashboard-container {
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 280px;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  position: fixed;
+  left: 0;
+  top: 80px;
+  bottom: 0;
+  z-index: 10;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.05);
+}
+
+.sidebar-tabs {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-tab {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 32px;
+  text-decoration: none;
+  color: #666;
+  font-weight: 500;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  border-left: 4px solid transparent;
+}
+
+.sidebar-tab:hover {
+  background: #f8fafc;
+  color: #5DD62C;
+}
+
+.sidebar-tab.active {
+  background: rgba(93,214,44,0.1);
+  color: #5DD62C;
+  border-left-color: #5DD62C;
+}
+
+/* Glowing green neon effect for active tab */
+.sidebar-tab.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: #5DD62C;
+  box-shadow: 0 0 20px #5DD62C, 0 0 40px rgba(93,214,44,0.5);
+}
+
+.sidebar-tab.active .tab-icon {
+  filter: drop-shadow(0 0 8px rgba(93,214,44,0.7));
+}
+
+.tab-icon {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+/* ===== DASHBOARD CONTENT ===== */
+.dashboard-content {
+  flex: 1;
+  margin-left: 280px;
+  padding: 0 40px;
 }
 
 .dashboard-header {
@@ -481,27 +561,6 @@ html, body {
 }
 
 /* ===== UTILITY ===== */
-.back-button {
-  position: absolute;
-  left: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #f8fafc;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-}
-
-.back-button:hover {
-  background: #e2e8f0;
-}
-
 #sessionInfo {
   margin-left: auto;
   display: flex;
@@ -520,12 +579,6 @@ html, body {
 <!-- Top Bar -->
 <div class="top-bar">
   <img class="logo" src="https://i.pinimg.com/736x/a4/e4/b5/a4e4b5b5a171600c5de2185f2e077a0f.jpg">
-  <button class="back-button" onclick="goToHome()" id="backButton" style="display: none;">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M19 12H5M12 19l-7-7 7-7"/>
-    </svg>
-    Back to Home
-  </button>
   <div class="tabs">
     <a href="#features" class="tab" id="featuresTab">Features</a>
     <a href="#pricing" class="tab" id="pricingTab">Pricing</a>
@@ -576,135 +629,184 @@ html, body {
 
 <!-- Dashboard Content (Hidden by default) -->
 <div id="dashboard">
-  <div class="dashboard-header">
-    <h1>Welcome to Eon Dashboard</h1>
-    <p class="welcome-message">Professional trading tools and AI-powered analysis at your fingertips. Real-time signals, portfolio tracking, and market insights.</p>
-    <p style="color: #666; font-size: 14px; margin-top: 10px;">Session expires in: <span id="dashboardTimer"></span></p>
-  </div>
-
-  <div class="dashboard-grid">
-    <div class="dashboard-card">
-      <div class="card-header">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24">
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-tabs">
+        <a href="#" class="sidebar-tab active" data-tab="home">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Home
+        </a>
+        <a href="#" class="sidebar-tab" data-tab="signals">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
           </svg>
-        </div>
-        <h3>Live Trading Signals</h3>
-      </div>
-      <div class="card-content">
-        <p>Real-time buy/sell signals with high accuracy predictions.</p>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-value">94%</div>
-            <div class="stat-label">Accuracy</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">24/7</div>
-            <div class="stat-label">Live Signals</div>
-          </div>
-        </div>
-        <ul class="signal-list">
-          <li class="signal-item">
-            <span class="signal-pair">BTC/USDT</span>
-            <span class="signal-type signal-buy">BUY</span>
-            <span class="signal-price">$43,250</span>
-          </li>
-          <li class="signal-item">
-            <span class="signal-pair">ETH/USDT</span>
-            <span class="signal-type signal-sell">SELL</span>
-            <span class="signal-price">$2,340</span>
-          </li>
-          <li class="signal-item">
-            <span class="signal-pair">SOL/USDT</span>
-            <span class="signal-type signal-buy">BUY</span>
-            <span class="signal-price">$98.50</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="dashboard-card ai-analysis">
-      <div class="card-header">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24">
+          Signals
+        </a>
+        <a href="#" class="sidebar-tab" data-tab="analysis">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-        </div>
-        <h3>AI Market Analysis</h3>
-      </div>
-      <div class="card-content">
-        <p>Advanced AI algorithms analyzing market trends and predicting movements.</p>
-        <div class="ai-prediction">
-          <div class="prediction-value">+2.8%</div>
-          <p>Predicted market movement for next 24 hours</p>
-        </div>
-        <div class="recent-activity">
-          <div class="activity-item">
-            <div class="activity-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-              </svg>
-            </div>
-            <div class="activity-details">
-              <div class="activity-action">Bullish trend detected</div>
-              <div class="activity-time">2 minutes ago</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <div class="activity-details">
-              <div class="activity-action">Volume spike analyzed</div>
-              <div class="activity-time">15 minutes ago</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="dashboard-card">
-      <div class="card-header">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24">
+          AI Analysis
+        </a>
+        <a href="#" class="sidebar-tab" data-tab="charts">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 3v18h18M7 16l4-4 4 4 6-6"/>
           </svg>
-        </div>
-        <h3>Live Charts</h3>
-      </div>
-      <div class="card-content">
-        <div class="trading-view-container">
-          Interactive Trading Charts
-          <br>
-          <small>(Real-time data feed connected)</small>
-        </div>
+          Charts
+        </a>
+        <a href="#" class="sidebar-tab" data-tab="portfolio">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          Portfolio
+        </a>
+        <a href="#" class="sidebar-tab" data-tab="settings">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          Settings
+        </a>
       </div>
     </div>
 
-    <div class="dashboard-card">
-      <div class="card-header">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-          </svg>
-        </div>
-        <h3>Portfolio Tracker</h3>
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+      <div class="dashboard-header">
+        <h1>Welcome to Eon Dashboard</h1>
+        <p class="welcome-message">Professional trading tools and AI-powered analysis at your fingertips. Real-time signals, portfolio tracking, and market insights.</p>
+        <p style="color: #666; font-size: 14px; margin-top: 10px;">Session expires in: <span id="dashboardTimer"></span></p>
       </div>
-      <div class="card-content">
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-value">$24,580</div>
-            <div class="stat-label">Total Value</div>
+
+      <div class="dashboard-grid">
+        <!-- Dashboard cards remain the same -->
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <h3>Live Trading Signals</h3>
           </div>
-          <div class="stat-item">
-            <div class="stat-value">+12.5%</div>
-            <div class="stat-label">24h Change</div>
+          <div class="card-content">
+            <p>Real-time buy/sell signals with high accuracy predictions.</p>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value">94%</div>
+                <div class="stat-label">Accuracy</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Live Signals</div>
+              </div>
+            </div>
+            <ul class="signal-list">
+              <li class="signal-item">
+                <span class="signal-pair">BTC/USDT</span>
+                <span class="signal-type signal-buy">BUY</span>
+                <span class="signal-price">$43,250</span>
+              </li>
+              <li class="signal-item">
+                <span class="signal-pair">ETH/USDT</span>
+                <span class="signal-type signal-sell">SELL</span>
+                <span class="signal-price">$2,340</span>
+              </li>
+              <li class="signal-item">
+                <span class="signal-pair">SOL/USDT</span>
+                <span class="signal-type signal-buy">BUY</span>
+                <span class="signal-price">$98.50</span>
+              </li>
+            </ul>
           </div>
         </div>
-        <p style="margin-top: 20px; font-size: 14px;">Connected to your exchange accounts for real-time tracking.</p>
+
+        <div class="dashboard-card ai-analysis">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3>AI Market Analysis</h3>
+          </div>
+          <div class="card-content">
+            <p>Advanced AI algorithms analyzing market trends and predicting movements.</p>
+            <div class="ai-prediction">
+              <div class="prediction-value">+2.8%</div>
+              <p>Predicted market movement for next 24 hours</p>
+            </div>
+            <div class="recent-activity">
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                  </svg>
+                </div>
+                <div class="activity-details">
+                  <div class="activity-action">Bullish trend detected</div>
+                  <div class="activity-time">2 minutes ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div class="activity-details">
+                  <div class="activity-action">Volume spike analyzed</div>
+                  <div class="activity-time">15 minutes ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 3v18h18M7 16l4-4 4 4 6-6"/>
+              </svg>
+            </div>
+            <h3>Live Charts</h3>
+          </div>
+          <div class="card-content">
+            <div class="trading-view-container">
+              Interactive Trading Charts
+              <br>
+              <small>(Real-time data feed connected)</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <h3>Portfolio Tracker</h3>
+          </div>
+          <div class="card-content">
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value">$24,580</div>
+                <div class="stat-label">Total Value</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">+12.5%</div>
+                <div class="stat-label">24h Change</div>
+              </div>
+            </div>
+            <p style="margin-top: 20px; font-size: 14px;">Connected to your exchange accounts for real-time tracking.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -923,7 +1025,6 @@ function showDashboard() {
   console.log("Showing dashboard");
   document.getElementById('homePage').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  document.getElementById('backButton').style.display = 'flex';
   document.getElementById('sessionInfo').style.display = 'flex';
   
   // Update tab
@@ -990,17 +1091,12 @@ function goToHome() {
   
   document.getElementById('homePage').style.display = 'block';
   document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('backButton').style.display = 'none';
   document.getElementById('sessionInfo').style.display = 'none';
   
   // Restore tabs
   document.getElementById('dashboardTab').style.display = 'block';
   document.getElementById('featuresTab').style.display = 'block';
   document.getElementById('pricingTab').style.display = 'block';
-  
-  // Clear session data but keep token for next time
-  // Don't call endSession() here because we want to keep the token alive
-  // for when user clicks Dashboard again
   
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1019,6 +1115,41 @@ function closeModal() {
   document.getElementById('userNotFoundModal').style.display = 'none';
 }
 
+// ===== SIDEBAR FUNCTIONALITY =====
+function setupSidebar() {
+  const sidebarTabs = document.querySelectorAll('.sidebar-tab');
+  
+  sidebarTabs.forEach(tab => {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Remove active class from all tabs
+      sidebarTabs.forEach(t => t.classList.remove('active'));
+      
+      // Add active class to clicked tab
+      this.classList.add('active');
+      
+      // Here you can add functionality to switch between different dashboard sections
+      const tabName = this.getAttribute('data-tab');
+      console.log(`Switching to ${tabName} tab`);
+      
+      // You can implement tab-specific content loading here
+      switchTab(tabName);
+    });
+  });
+}
+
+function switchTab(tabName) {
+  // This is where you would load different content for each tab
+  // For now, we'll just log which tab was clicked
+  console.log(`Active tab: ${tabName}`);
+  
+  // You can implement:
+  // 1. Loading different dashboard views
+  // 2. Fetching tab-specific data
+  // 3. Updating the main content area
+}
+
 // ===== INITIALIZATION =====
 window.addEventListener('load', function() {
   console.log("Page loaded, initializing...");
@@ -1032,6 +1163,9 @@ window.addEventListener('load', function() {
   document.getElementById('buyButton').addEventListener('click', function() {
     window.open('https://whop.com/your-product-link', '_blank');
   });
+  
+  // Setup sidebar functionality
+  setupSidebar();
   
   // Check for Whop token on load
   const urlParams = new URLSearchParams(window.location.search);
