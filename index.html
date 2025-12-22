@@ -1070,6 +1070,604 @@ html, body {
   color: #aaa;
 }
 
+/* ===== AI ANALYSIS PAGE ===== */
+#aiAnalysisPage {
+  display: none;
+  min-height: 100vh;
+  padding: 120px 0 60px;
+}
+
+.ai-analysis-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.ai-analysis-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.ai-analysis-header h1 {
+  font-size: 48px;
+  color: #0f0f0f;
+  margin-bottom: 20px;
+}
+
+.ai-analysis-header p {
+  font-size: 18px;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.upload-section {
+  background: white;
+  border-radius: 20px;
+  padding: 60px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  border: 2px dashed rgba(93,214,44,0.3);
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.upload-area {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+.upload-box {
+  background: linear-gradient(135deg, rgba(93,214,44,0.05), rgba(93,214,44,0.02));
+  border: 2px dashed #5DD62C;
+  border-radius: 15px;
+  padding: 60px 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.upload-box:hover {
+  background: linear-gradient(135deg, rgba(93,214,44,0.1), rgba(93,214,44,0.05));
+  border-color: #a6ff75;
+  transform: translateY(-5px);
+}
+
+.upload-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #5DD62C, #a6ff75);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.upload-icon svg {
+  width: 40px;
+  height: 40px;
+  stroke: white;
+  stroke-width: 2;
+}
+
+.upload-box h3 {
+  font-size: 24px;
+  color: #0f0f0f;
+  margin-bottom: 10px;
+}
+
+.upload-box p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+#imagePreview {
+  display: none;
+  margin-top: 20px;
+  text-align: center;
+}
+
+#previewImage {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.upload-info {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-item svg {
+  width: 20px;
+  height: 20px;
+  stroke: #5DD62C;
+}
+
+.info-item span {
+  color: #666;
+  font-size: 14px;
+}
+
+/* ===== ANALYZE BUTTON ===== */
+.analyze-button-container {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+/* ===== LOADING ANIMATION ===== */
+.loading-section {
+  display: none;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.loader-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 180px;
+  font-family: "Inter", sans-serif;
+  font-size: 1.2em;
+  font-weight: 300;
+  color: white;
+  border-radius: 50%;
+  background-color: transparent;
+  user-select: none;
+  margin: 0 auto;
+}
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: transparent;
+  animation: loader-rotate 2s linear infinite;
+  z-index: 0;
+}
+
+@keyframes loader-rotate {
+  0% {
+    transform: rotate(90deg);
+    box-shadow:
+      0 10px 20px 0 #fff inset,
+      0 20px 30px 0 #5fff5f inset,
+      0 60px 60px 0 #1eec25 inset;
+  }
+  50% {
+    transform: rotate(270deg);
+    box-shadow:
+      0 10px 20px 0 #fff inset,
+      0 20px 30px 0 #5fff5f inset,
+      0 60px 60px 0 #1eec25 inset;
+  }
+  100% {
+    transform: rotate(450deg);
+    box-shadow:
+      0 10px 20px 0 #fff inset,
+      0 20px 30px 0 #5fff5f inset,
+      0 60px 60px 0 #1eec25 inset;
+  }
+}
+
+.loader-letter {
+  display: inline-block;
+  opacity: 0.4;
+  transform: translateY(0);
+  animation: loader-letter-anim 2s infinite;
+  z-index: 1;
+  border-radius: 50ch;
+  border: none;
+}
+
+.loader-letter:nth-child(1) {
+  animation-delay: 0s;
+}
+.loader-letter:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.loader-letter:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.loader-letter:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.loader-letter:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.loader-letter:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.loader-letter:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.loader-letter:nth-child(8) {
+  animation-delay: 0.7s;
+}
+.loader-letter:nth-child(9) {
+  animation-delay: 0.8s;
+}
+.loader-letter:nth-child(10) {
+  animation-delay: 0.9s;
+}
+
+@keyframes loader-letter-anim {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  40% {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+}
+
+/* ===== ANALYSIS RESULTS ===== */
+.analysis-results {
+  display: none;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  border-radius: 20px;
+  padding: 60px;
+  color: white;
+  margin-top: 40px;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.results-header h2 {
+  font-size: 36px;
+  color: white;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #5DD62C, #a6ff75);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.results-header p {
+  color: #aaa;
+  font-size: 16px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.result-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 15px;
+  padding: 30px;
+  border: 1px solid rgba(93,214,44,0.2);
+  transition: all 0.3s ease;
+}
+
+.result-card:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(93,214,44,0.4);
+  transform: translateY(-5px);
+}
+
+.result-card h3 {
+  font-size: 18px;
+  color: #aaa;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.result-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #5DD62C;
+  margin-bottom: 10px;
+}
+
+.result-label {
+  font-size: 14px;
+  color: #888;
+}
+
+.prediction-section {
+  background: rgba(93,214,44,0.1);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  border: 2px solid rgba(93,214,44,0.3);
+}
+
+.prediction-section h3 {
+  font-size: 24px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.prediction-main {
+  font-size: 48px;
+  font-weight: 700;
+  color: #5DD62C;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(93,214,44,0.5);
+}
+
+.prediction-details {
+  color: #aaa;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(93,214,44,0.1);
+  color: #5DD62C;
+  border: 2px solid #5DD62C;
+  padding: 12px 30px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 40px;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: #5DD62C;
+  color: #0f0f0f;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(93,214,44,0.3);
+}
+
+/* ===== ANIMATED ANALYZE BUTTON ===== */
+.animated-button {
+  --h-button: 48px;
+  --w-button: 102px;
+  --round: 0.75rem;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  background: radial-gradient(
+      65.28% 65.28% at 50% 100%,
+      rgba(137, 255, 113, 0.8) 0%,
+      rgba(223, 113, 255, 0) 100%
+    ),
+    linear-gradient(0deg, #5af86d, #5af86d);
+  border-radius: var(--round);
+  border: none;
+  outline: none;
+  padding: 12px 18px;
+  width: 150px;
+  height: 60px;
+}
+.animated-button::before,
+.animated-button::after {
+  content: "";
+  position: absolute;
+  inset: var(--space);
+  transition: all 0.5s ease-in-out;
+  border-radius: calc(var(--round) - var(--space));
+  z-index: 0;
+}
+.animated-button::before {
+  --space: 1px;
+  background: linear-gradient(
+    177.95deg,
+    rgba(255, 255, 255, 0.19) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+.animated-button::after {
+  --space: 2px;
+  background: radial-gradient(
+      65.28% 65.28% at 50% 100%,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(223, 113, 255, 0) 100%
+    ),
+    linear-gradient(0deg, #5af85d, #7af85a);
+}
+.animated-button:active {
+  transform: scale(0.95);
+}
+
+.fold {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1rem;
+  width: 1rem;
+  display: inline-block;
+  transition: all 0.5s ease-in-out;
+  background: radial-gradient(
+    100% 75% at 55%,
+    rgba(113, 255, 120, 0.8) 0%,
+    rgba(223, 113, 255, 0) 100%
+  );
+  box-shadow: 0 0 3px black;
+  border-bottom-left-radius: 0.5rem;
+  border-top-right-radius: var(--round);
+}
+.fold::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150%;
+  height: 150%;
+  transform: rotate(45deg) translateX(0%) translateY(-18px);
+  background-color: #e8e8e8;
+  pointer-events: none;
+}
+.animated-button:hover .fold {
+  margin-top: -1rem;
+  margin-right: -1rem;
+}
+
+.points_wrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.points_wrapper .point {
+  bottom: -10px;
+  position: absolute;
+  animation: floating-points infinite ease-in-out;
+  pointer-events: none;
+  width: 2px;
+  height: 2px;
+  background-color: #fff;
+  border-radius: 9999px;
+}
+@keyframes floating-points {
+  0% {
+    transform: translateY(0);
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-55px);
+    opacity: 0;
+  }
+}
+.points_wrapper .point:nth-child(1) {
+  left: 10%;
+  opacity: 1;
+  animation-duration: 2.35s;
+  animation-delay: 0.2s;
+}
+.points_wrapper .point:nth-child(2) {
+  left: 30%;
+  opacity: 0.7;
+  animation-duration: 2.5s;
+  animation-delay: 0.5s;
+}
+.points_wrapper .point:nth-child(3) {
+  left: 25%;
+  opacity: 0.8;
+  animation-duration: 2.2s;
+  animation-delay: 0.1s;
+}
+.points_wrapper .point:nth-child(4) {
+  left: 44%;
+  opacity: 0.6;
+  animation-duration: 2.05s;
+}
+.points_wrapper .point:nth-child(5) {
+  left: 50%;
+  opacity: 1;
+  animation-duration: 1.9s;
+}
+.points_wrapper .point:nth-child(6) {
+  left: 75%;
+  opacity: 0.5;
+  animation-duration: 1.5s;
+  animation-delay: 1.5s;
+}
+.points_wrapper .point:nth-child(7) {
+  left: 88%;
+  opacity: 0.9;
+  animation-duration: 2.2s;
+  animation-delay: 0.2s;
+}
+.points_wrapper .point:nth-child(8) {
+  left: 58%;
+  opacity: 0.8;
+  animation-duration: 2.25s;
+  animation-delay: 0.2s;
+}
+.points_wrapper .point:nth-child(9) {
+  left: 98%;
+  opacity: 0.6;
+  animation-duration: 2.6s;
+  animation-delay: 0.1s;
+}
+.points_wrapper .point:nth-child(10) {
+  left: 65%;
+  opacity: 1;
+  animation-duration: 2.5s;
+  animation-delay: 0.2s;
+}
+
+.inner {
+  z-index: 2;
+  gap: 6px;
+  position: relative;
+  width: 100%;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: color 0.2s ease-in-out;
+}
+
+.inner svg.icon {
+  width: 18px;
+  height: 18px;
+  transition: fill 0.1s linear;
+}
+
+.animated-button:focus svg.icon {
+  fill: white;
+}
+.animated-button:hover svg.icon {
+  fill: transparent;
+  animation:
+    dasharray 1s linear forwards,
+    filled 0.1s linear forwards 0.95s;
+}
+@keyframes dasharray {
+  from {
+    stroke-dasharray: 0 0 0 0;
+  }
+  to {
+    stroke-dasharray: 68 68 0 0;
+  }
+}
+@keyframes filled {
+  to {
+    fill: white;
+  }
+}
+
 /* ===== MODAL ===== */
 .modal {
   display: none;
@@ -1212,23 +1810,23 @@ html, body {
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="sidebar-tabs">
-        <a href="#" class="sidebar-tab active" data-tab="home">
+        <a href="#" class="sidebar-tab active" data-tab="home" onclick="switchTab('home')">
           <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
           </svg>
           Home
+        </a>
+        <a href="#" class="sidebar-tab" data-tab="ai-analysis" onclick="switchTab('ai-analysis')">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          AI Analysis
         </a>
         <a href="#" class="sidebar-tab" data-tab="signals">
           <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
           </svg>
           Signals
-        </a>
-        <a href="#" class="sidebar-tab" data-tab="analysis">
-          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          AI Analysis
         </a>
         <a href="#" class="sidebar-tab" data-tab="charts">
           <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1323,131 +1921,176 @@ html, body {
       </div>
 
       <!-- Dashboard Grid -->
-      <div class="dashboard-grid">
-        <div class="dashboard-card">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-            </div>
-            <h3>Live Trading Signals</h3>
+      <div class="dashboard-grid" id="dashboardContent">
+        <!-- Dashboard content will be loaded here based on selected tab -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Analysis Page -->
+<div id="aiAnalysisPage">
+  <div class="ai-analysis-content">
+    <div class="ai-analysis-header">
+      <h1>AI Chart Analysis</h1>
+      <p>Upload a screenshot of your stock chart and let our AI analyze patterns, predict trends, and provide actionable insights.</p>
+    </div>
+
+    <div class="upload-section">
+      <div class="upload-area">
+        <div class="upload-box" id="uploadBox">
+          <div class="upload-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
           </div>
-          <div class="card-content">
-            <p>Real-time buy/sell signals with high accuracy predictions.</p>
-            <div class="stats-grid">
-              <div class="stat-item">
-                <div class="stat-value">94%</div>
-                <div class="stat-label">Accuracy</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value">24/7</div>
-                <div class="stat-label">Live Signals</div>
-              </div>
-            </div>
-            <ul class="signal-list">
-              <li class="signal-item">
-                <span class="signal-pair">BTC/USDT</span>
-                <span class="signal-type signal-buy">BUY</span>
-                <span class="signal-price">$43,250</span>
-              </li>
-              <li class="signal-item">
-                <span class="signal-pair">ETH/USDT</span>
-                <span class="signal-type signal-sell">SELL</span>
-                <span class="signal-price">$2,340</span>
-              </li>
-              <li class="signal-item">
-                <span class="signal-pair">SOL/USDT</span>
-                <span class="signal-type signal-buy">BUY</span>
-                <span class="signal-price">$98.50</span>
-              </li>
-            </ul>
-          </div>
+          <h3>Upload Chart Image</h3>
+          <p>Drag & drop or click to upload</p>
+          <p style="font-size: 12px; margin-top: 10px; color: #999;">Supported: JPG, PNG, WebP (Max 5MB)</p>
+          <input type="file" id="imageInput" accept=".jpg,.jpeg,.png,.webp" style="display: none;">
         </div>
 
-        <div class="dashboard-card ai-analysis">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <h3>AI Market Analysis</h3>
+        <div id="imagePreview" class="image-preview">
+          <img id="previewImage" src="" alt="Preview">
+          <div style="margin-top: 10px;">
+            <button onclick="removeImage()" style="background: #ff4b4b; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+              Remove Image
+            </button>
           </div>
-          <div class="card-content">
-            <p>Advanced AI algorithms analyzing market trends and predicting movements.</p>
-            <div class="ai-prediction">
-              <div class="prediction-value">+2.8%</div>
-              <p>Predicted market movement for next 24 hours</p>
-            </div>
-            <div class="recent-activity">
-              <div class="activity-item">
-                <div class="activity-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                  </svg>
-                </div>
-                <div class="activity-details">
-                  <div class="activity-action">Bullish trend detected</div>
-                  <div class="activity-time">2 minutes ago</div>
-                </div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                </div>
-                <div class="activity-details">
-                  <div class="activity-action">Volume spike analyzed</div>
-                  <div class="activity-time">15 minutes ago</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
+
+      <div class="upload-info">
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <span>Pattern Recognition</span>
+        </div>
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          <span>Trend Prediction</span>
+        </div>
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>Risk Assessment</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="analyze-button-container">
+      <button type="button" class="animated-button" id="analyzeButton" onclick="analyzeChart()">
+        <span class="fold"></span>
+
+        <div class="points_wrapper">
+          <i class="point"></i>
+          <i class="point"></i>
+          <i class="point"></i>
+          <i class="point"></i>
+          <i class="point"></i>
+          <i class="point"></i>
+          <i class="point"></i>
+          <i class="point"></i>
+          <i class="point"></i>
+          <i class="point"></i>
         </div>
 
-        <div class="dashboard-card">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M3 3v18h18M7 16l4-4 4 4 6-6"/>
-              </svg>
-            </div>
-            <h3>Live Charts</h3>
-          </div>
-          <div class="card-content">
-            <div class="trading-view-container">
-              Interactive Trading Charts
-              <br>
-              <small>(Real-time data feed connected)</small>
-            </div>
-          </div>
-        </div>
+        <span class="inner"
+          ><svg
+            class="icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+          >
+            <polyline
+              points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"
+            ></polyline></svg
+          >Analyze</span
+        >
+      </button>
+    </div>
 
-        <div class="dashboard-card">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-              </svg>
-            </div>
-            <h3>Portfolio Tracker</h3>
-          </div>
-          <div class="card-content">
-            <div class="stats-grid">
-              <div class="stat-item">
-                <div class="stat-value">$24,580</div>
-                <div class="stat-label">Total Value</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value">+12.5%</div>
-                <div class="stat-label">24h Change</div>
-              </div>
-            </div>
-            <p style="margin-top: 20px; font-size: 14px;">Connected to your exchange accounts for real-time tracking.</p>
-          </div>
+    <!-- Loading Animation -->
+    <div class="loading-section" id="loadingSection">
+      <div class="loader-wrapper">
+        <span class="loader-letter">A</span>
+        <span class="loader-letter">n</span>
+        <span class="loader-letter">a</span>
+        <span class="loader-letter">l</span>
+        <span class="loader-letter">y</span>
+        <span class="loader-letter">z</span>
+        <span class="loader-letter">i</span>
+        <span class="loader-letter">n</span>
+        <span class="loader-letter">g</span>
+        <span class="loader-letter">.</span>
+        <span class="loader-letter">.</span>
+        <span class="loader-letter">.</span>
+
+        <div class="loader"></div>
+      </div>
+      <p style="margin-top: 30px; color: #666; font-size: 16px;">AI is analyzing your chart pattern...</p>
+    </div>
+
+    <!-- Analysis Results -->
+    <div class="analysis-results" id="analysisResults">
+      <div class="results-header">
+        <h2>Analysis Complete</h2>
+        <p>Based on our AI's analysis of your chart pattern</p>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <h3>Pattern Detected</h3>
+          <div class="result-value" id="patternResult">Bullish Flag</div>
+          <div class="result-label">High reliability (92%)</div>
         </div>
+        <div class="result-card">
+          <h3>Trend Direction</h3>
+          <div class="result-value" id="trendResult">Upward</div>
+          <div class="result-label">Strong momentum detected</div>
+        </div>
+        <div class="result-card">
+          <h3>Confidence Score</h3>
+          <div class="result-value" id="confidenceResult">87%</div>
+          <div class="result-label">Based on pattern matching</div>
+        </div>
+        <div class="result-card">
+          <h3>Risk Level</h3>
+          <div class="result-value" id="riskResult">Medium</div>
+          <div class="result-label">Moderate volatility expected</div>
+        </div>
+      </div>
+
+      <div class="prediction-section">
+        <h3>AI Prediction</h3>
+        <div class="prediction-main" id="pricePrediction">+5.2%</div>
+        <div class="prediction-details">
+          Expected price movement over the next 7 trading sessions based on historical pattern analysis.
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <button class="back-button" onclick="goBackToDashboard()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5"/>
+            <path d="M12 19l-7-7 7-7"/>
+          </svg>
+          Back to Dashboard
+        </button>
       </div>
     </div>
   </div>
@@ -1484,6 +2127,7 @@ let sessionTimer = null;
 let securityCheckInterval = null;
 let typingAnimation = null;
 let currentUsername = "";
+let selectedImage = null;
 
 // ===== USERNAME MANAGEMENT =====
 function showUsernameModal() {
@@ -1815,6 +2459,7 @@ function showDashboard() {
   console.log("Showing dashboard");
   document.getElementById('homePage').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('aiAnalysisPage').style.display = 'none';
   document.getElementById('sessionInfo').style.display = 'flex';
   
   // Update tab
@@ -1838,7 +2483,172 @@ function showDashboard() {
     }
   }, SECURITY_CONFIG.CHECK_INTERVAL);
   
+  // Load default dashboard content
+  loadDashboardContent('home');
+  
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function loadDashboardContent(tabName) {
+  const dashboardContent = document.getElementById('dashboardContent');
+  
+  // Clear existing content
+  dashboardContent.innerHTML = '';
+  
+  switch(tabName) {
+    case 'home':
+      dashboardContent.innerHTML = `
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <h3>Live Trading Signals</h3>
+          </div>
+          <div class="card-content">
+            <p>Real-time buy/sell signals with high accuracy predictions.</p>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value">94%</div>
+                <div class="stat-label">Accuracy</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Live Signals</div>
+              </div>
+            </div>
+            <ul class="signal-list">
+              <li class="signal-item">
+                <span class="signal-pair">BTC/USDT</span>
+                <span class="signal-type signal-buy">BUY</span>
+                <span class="signal-price">$43,250</span>
+              </li>
+              <li class="signal-item">
+                <span class="signal-pair">ETH/USDT</span>
+                <span class="signal-type signal-sell">SELL</span>
+                <span class="signal-price">$2,340</span>
+              </li>
+              <li class="signal-item">
+                <span class="signal-pair">SOL/USDT</span>
+                <span class="signal-type signal-buy">BUY</span>
+                <span class="signal-price">$98.50</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dashboard-card ai-analysis">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3>AI Market Analysis</h3>
+          </div>
+          <div class="card-content">
+            <p>Advanced AI algorithms analyzing market trends and predicting movements.</p>
+            <div class="ai-prediction">
+              <div class="prediction-value">+2.8%</div>
+              <p>Predicted market movement for next 24 hours</p>
+            </div>
+            <div class="recent-activity">
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                  </svg>
+                </div>
+                <div class="activity-details">
+                  <div class="activity-action">Bullish trend detected</div>
+                  <div class="activity-time">2 minutes ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div class="activity-details">
+                  <div class="activity-action">Volume spike analyzed</div>
+                  <div class="activity-time">15 minutes ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 3v18h18M7 16l4-4 4 4 6-6"/>
+              </svg>
+            </div>
+            <h3>Live Charts</h3>
+          </div>
+          <div class="card-content">
+            <div class="trading-view-container">
+              Interactive Trading Charts
+              <br>
+              <small>(Real-time data feed connected)</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <h3>Portfolio Tracker</h3>
+          </div>
+          <div class="card-content">
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value">$24,580</div>
+                <div class="stat-label">Total Value</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">+12.5%</div>
+                <div class="stat-label">24h Change</div>
+              </div>
+            </div>
+            <p style="margin-top: 20px; font-size: 14px;">Connected to your exchange accounts for real-time tracking.</p>
+          </div>
+        </div>
+      `;
+      break;
+      
+    case 'signals':
+      // Signals tab content
+      dashboardContent.innerHTML = `
+        <div class="dashboard-card" style="grid-column: span 2;">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <h3>Trading Signals</h3>
+          </div>
+          <div class="card-content">
+            <p>Real-time trading signals updated every minute.</p>
+            <!-- Add signals content here -->
+          </div>
+        </div>
+      `;
+      break;
+      
+    default:
+      // Default to home content
+      loadDashboardContent('home');
+  }
 }
 
 function startSessionTimer() {
@@ -1888,6 +2698,7 @@ function goToHome() {
   
   document.getElementById('homePage').style.display = 'block';
   document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('aiAnalysisPage').style.display = 'none';
   document.getElementById('sessionInfo').style.display = 'none';
   document.getElementById('usernameModal').style.display = 'none';
   
@@ -1913,39 +2724,186 @@ function closeModal() {
   document.getElementById('userNotFoundModal').style.display = 'none';
 }
 
-// ===== SIDEBAR FUNCTIONALITY =====
-function setupSidebar() {
-  const sidebarTabs = document.querySelectorAll('.sidebar-tab');
-  
-  sidebarTabs.forEach(tab => {
-    tab.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      // Remove active class from all tabs
-      sidebarTabs.forEach(t => t.classList.remove('active'));
-      
-      // Add active class to clicked tab
-      this.classList.add('active');
-      
-      // Here you can add functionality to switch between different dashboard sections
-      const tabName = this.getAttribute('data-tab');
-      console.log(`Switching to ${tabName} tab`);
-      
-      // You can implement tab-specific content loading here
-      switchTab(tabName);
-    });
+// ===== TAB SWITCHING =====
+function switchTab(tabName) {
+  // Remove active class from all sidebar tabs
+  document.querySelectorAll('.sidebar-tab').forEach(tab => {
+    tab.classList.remove('active');
   });
+  
+  // Add active class to clicked tab
+  const clickedTab = document.querySelector(`.sidebar-tab[data-tab="${tabName}"]`);
+  if (clickedTab) {
+    clickedTab.classList.add('active');
+  }
+  
+  if (tabName === 'ai-analysis') {
+    showAiAnalysisPage();
+  } else {
+    showDashboard();
+    loadDashboardContent(tabName);
+  }
 }
 
-function switchTab(tabName) {
-  // This is where you would load different content for each tab
-  // For now, we'll just log which tab was clicked
-  console.log(`Active tab: ${tabName}`);
+function showAiAnalysisPage() {
+  console.log("Showing AI Analysis page");
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('aiAnalysisPage').style.display = 'block';
+  document.getElementById('homePage').style.display = 'none';
   
-  // You can implement:
-  // 1. Loading different dashboard views
-  // 2. Fetching tab-specific data
-  // 3. Updating the main content area
+  // Update sidebar active state
+  document.querySelectorAll('.sidebar-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  const aiTab = document.querySelector('.sidebar-tab[data-tab="ai-analysis"]');
+  if (aiTab) aiTab.classList.add('active');
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBackToDashboard() {
+  showDashboard();
+  switchTab('home');
+}
+
+// ===== IMAGE UPLOAD FUNCTIONALITY =====
+function setupImageUpload() {
+  const uploadBox = document.getElementById('uploadBox');
+  const imageInput = document.getElementById('imageInput');
+  const imagePreview = document.getElementById('imagePreview');
+  const previewImage = document.getElementById('previewImage');
+  const analyzeButton = document.getElementById('analyzeButton');
+  
+  // Click on upload box to trigger file input
+  uploadBox.addEventListener('click', () => {
+    imageInput.click();
+  });
+  
+  // Drag and drop functionality
+  uploadBox.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadBox.style.background = 'linear-gradient(135deg, rgba(93,214,44,0.1), rgba(93,214,44,0.05))';
+    uploadBox.style.borderColor = '#a6ff75';
+  });
+  
+  uploadBox.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    uploadBox.style.background = 'linear-gradient(135deg, rgba(93,214,44,0.05), rgba(93,214,44,0.02))';
+    uploadBox.style.borderColor = '#5DD62C';
+  });
+  
+  uploadBox.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadBox.style.background = 'linear-gradient(135deg, rgba(93,214,44,0.05), rgba(93,214,44,0.02))';
+    uploadBox.style.borderColor = '#5DD62C';
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      handleImageFile(files[0]);
+    }
+  });
+  
+  // File input change
+  imageInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+      handleImageFile(e.target.files[0]);
+    }
+  });
+  
+  function handleImageFile(file) {
+    // Check file type
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+      alert('Please upload a valid image file (JPG, PNG, or WebP).');
+      return;
+    }
+    
+    // Check file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB.');
+      return;
+    }
+    
+    selectedImage = file;
+    
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      previewImage.src = e.target.result;
+      imagePreview.style.display = 'block';
+      analyzeButton.disabled = false;
+      analyzeButton.style.opacity = '1';
+      analyzeButton.style.cursor = 'pointer';
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function removeImage() {
+  selectedImage = null;
+  document.getElementById('imagePreview').style.display = 'none';
+  document.getElementById('imageInput').value = '';
+  const analyzeButton = document.getElementById('analyzeButton');
+  analyzeButton.disabled = true;
+  analyzeButton.style.opacity = '0.5';
+  analyzeButton.style.cursor = 'not-allowed';
+}
+
+// ===== CHART ANALYSIS FUNCTIONALITY =====
+function analyzeChart() {
+  if (!selectedImage) {
+    alert('Please upload an image first.');
+    return;
+  }
+  
+  // Show loading animation
+  document.getElementById('loadingSection').style.display = 'block';
+  document.getElementById('analysisResults').style.display = 'none';
+  document.getElementById('analyzeButton').style.display = 'none';
+  
+  // Simulate AI analysis (in a real app, this would be an API call)
+  setTimeout(() => {
+    // Generate random but realistic analysis results
+    const patterns = ['Bullish Flag', 'Head & Shoulders', 'Double Bottom', 'Ascending Triangle', 'Cup & Handle'];
+    const trends = ['Upward', 'Downward', 'Sideways', 'Consolidating'];
+    const predictions = ['+5.2%', '+3.8%', '-2.1%', '+7.5%', '+1.9%'];
+    const risks = ['Low', 'Medium', 'High'];
+    
+    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+    const randomTrend = trends[Math.floor(Math.random() * trends.length)];
+    const randomConfidence = Math.floor(Math.random() * 30) + 70; // 70-100%
+    const randomRisk = risks[Math.floor(Math.random() * risks.length)];
+    const randomPrediction = predictions[Math.floor(Math.random() * predictions.length)];
+    
+    // Update results
+    document.getElementById('patternResult').textContent = randomPattern;
+    document.getElementById('trendResult').textContent = randomTrend;
+    document.getElementById('confidenceResult').textContent = randomConfidence + '%';
+    document.getElementById('riskResult').textContent = randomRisk;
+    document.getElementById('pricePrediction').textContent = randomPrediction;
+    
+    // Hide loading, show results
+    document.getElementById('loadingSection').style.display = 'none';
+    document.getElementById('analysisResults').style.display = 'block';
+    
+    // Store analysis in history
+    const analysis = {
+      pattern: randomPattern,
+      trend: randomTrend,
+      confidence: randomConfidence,
+      risk: randomRisk,
+      prediction: randomPrediction,
+      timestamp: new Date().toLocaleString(),
+      image: selectedImage.name
+    };
+    
+    // Save to localStorage for history tracking
+    let analysisHistory = JSON.parse(localStorage.getItem('eon_analysis_history') || '[]');
+    analysisHistory.unshift(analysis);
+    if (analysisHistory.length > 10) analysisHistory = analysisHistory.slice(0, 10);
+    localStorage.setItem('eon_analysis_history', JSON.stringify(analysisHistory));
+    
+  }, 3000); // 3 second simulation
 }
 
 // ===== INITIALIZATION =====
@@ -1962,8 +2920,8 @@ window.addEventListener('load', function() {
     window.open('https://whop.com/your-product-link', '_blank');
   });
   
-  // Setup sidebar functionality
-  setupSidebar();
+  // Setup image upload functionality
+  setupImageUpload();
   
   // Check for stored username
   currentUsername = getStoredUsername();
@@ -2021,7 +2979,8 @@ document.addEventListener('keydown', function(e) {
     e.preventDefault();
     
     // Additional protection: If in dashboard and trying to inspect, log out
-    if (document.getElementById('dashboard').style.display === 'block') {
+    if (document.getElementById('dashboard').style.display === 'block' || 
+        document.getElementById('aiAnalysisPage').style.display === 'block') {
       setTimeout(() => {
         if (confirm("Security violation detected. Logging out for security.")) {
           endSession();
@@ -2034,7 +2993,8 @@ document.addEventListener('keydown', function(e) {
 });
 
 document.addEventListener('contextmenu', function(e) {
-  if (document.getElementById('dashboard').style.display === 'block') {
+  if (document.getElementById('dashboard').style.display === 'block' || 
+      document.getElementById('aiAnalysisPage').style.display === 'block') {
     e.preventDefault();
     
     // Log suspicious activity
@@ -2082,14 +3042,16 @@ document.addEventListener('keydown', function(e) {
 
 // ===== TAB/BROWSER CLOSE DETECTION =====
 window.addEventListener('beforeunload', function(e) {
-  if (document.getElementById('dashboard').style.display === 'block') {
+  if (document.getElementById('dashboard').style.display === 'block' || 
+      document.getElementById('aiAnalysisPage').style.display === 'block') {
     // Don't show prompt for regular navigation
     return;
   }
 });
 
 window.addEventListener('pagehide', function() {
-  if (document.getElementById('dashboard').style.display === 'block') {
+  if (document.getElementById('dashboard').style.display === 'block' || 
+      document.getElementById('aiAnalysisPage').style.display === 'block') {
     // Clear sessionStorage when leaving dashboard (prevents tab copying)
     sessionStorage.removeItem('eon_tab_token');
   }
