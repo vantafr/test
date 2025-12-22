@@ -791,7 +791,6 @@ html, body {
   color: #555;
   display: inline;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .typing-cursor {
@@ -1287,7 +1286,7 @@ html, body {
           </div>
         </div>
         
-        <!-- Typing Animation - Fixed Structure -->
+        <!-- Typing Animation -->
         <div class="typing-container">
           <div class="new-badge">NEW</div>
           <div class="typing-text-container">
@@ -1547,10 +1546,9 @@ function updateUsernameDisplay() {
   }
 }
 
-// ===== TYPING ANIMATION - FIXED VERSION =====
+// ===== TYPING ANIMATION - COMPLETELY REWRITTEN =====
 function startTypingAnimation() {
   const typingText = document.getElementById('typingText');
-  const cursor = document.querySelector('.typing-cursor');
   const messages = [
     "AI-Powered market analysis now available",
     "Real-time predictive analytics activated",
@@ -1576,6 +1574,7 @@ function startTypingAnimation() {
     }
     
     if (isDeleting) {
+      // When deleting, remove last character
       typingText.textContent = currentMessage.substring(0, charIndex - 1);
       charIndex--;
       
@@ -1586,6 +1585,7 @@ function startTypingAnimation() {
         return;
       }
     } else {
+      // When typing, add next character
       typingText.textContent = currentMessage.substring(0, charIndex + 1);
       charIndex++;
       
@@ -1605,7 +1605,13 @@ function startTypingAnimation() {
   
   // Set initial position
   typingText.textContent = "";
-  type();
+  charIndex = 0;
+  isDeleting = false;
+  isWaiting = false;
+  messageIndex = 0;
+  
+  // Start animation
+  setTimeout(type, 500);
 }
 
 // ===== SECURE TOKEN GENERATION =====
