@@ -390,8 +390,10 @@ html, body {
 }
 
 .welcome-user-container {
-  position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 5px;
 }
 
 .welcome-user {
@@ -409,26 +411,313 @@ html, body {
   display: inline-block;
 }
 
-.welcome-user-role {
-  position: absolute;
-  top: -10px;
-  right: -40px;
-  font-size: 18px;
-  color: #5DD62C;
-  text-shadow: 0 0 15px rgba(93,214,44,0.8);
+/* ===== EON ROLE BADGE ===== */
+.eon-role-badge {
+  --duration: 7s;
+  --easing: linear;
+  --c-color-1: rgba(93, 214, 44, 0.7);
+  --c-color-2: #5DD62C;
+  --c-color-3: #a6ff75;
+  --c-color-4: rgba(166, 255, 117, 0.7);
+  --c-shadow: rgba(93, 214, 44, 0.5);
+  --c-shadow-inset-top: rgba(93, 214, 44, 0.9);
+  --c-shadow-inset-bottom: rgba(166, 255, 117, 0.8);
+  --c-radial-inner: #5DD62C;
+  --c-radial-outer: #a6ff75;
+  --c-color: white;
+  
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  outline: none;
+  position: relative;
+  cursor: default;
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
   font-weight: 600;
-  transform: rotate(15deg);
-  animation: roleGlow 3s infinite alternate;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--c-color);
+  background: radial-gradient(
+    circle,
+    var(--c-radial-inner),
+    var(--c-radial-outer) 80%
+  );
+  box-shadow: 0 0 10px var(--c-shadow);
+  width: auto;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes roleGlow {
-  0% {
-    text-shadow: 0 0 10px rgba(93,214,44,0.8);
-    transform: rotate(15deg) scale(1);
+.eon-role-badge:before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 2px 8px var(--c-shadow-inset-top),
+    inset 0 -2px 4px var(--c-shadow-inset-bottom);
+}
+
+.eon-role-badge .badge-wrapper {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  overflow: hidden;
+  border-radius: 16px;
+  min-width: 60px;
+  padding: 6px 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.eon-role-badge .badge-wrapper span {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.eon-role-badge .badge-wrapper .circle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  filter: blur(var(--blur, 4px));
+  background: var(--background, transparent);
+  transform: translate(var(--x, 0), var(--y, 0)) translateZ(0);
+  animation: var(--animation, none) var(--duration) var(--easing) infinite;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-1,
+.eon-role-badge .badge-wrapper .circle.circle-9,
+.eon-role-badge .badge-wrapper .circle.circle-10 {
+  --background: var(--c-color-4);
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-3,
+.eon-role-badge .badge-wrapper .circle.circle-4 {
+  --background: var(--c-color-2);
+  --blur: 7px;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-5,
+.eon-role-badge .badge-wrapper .circle.circle-6 {
+  --background: var(--c-color-3);
+  --blur: 8px;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-2,
+.eon-role-badge .badge-wrapper .circle.circle-7,
+.eon-role-badge .badge-wrapper .circle.circle-8,
+.eon-role-badge .badge-wrapper .circle.circle-11,
+.eon-role-badge .badge-wrapper .circle.circle-12 {
+  --background: var(--c-color-1);
+  --blur: 6px;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-1 {
+  --x: 0;
+  --y: -20px;
+  --animation: badge-circle-1;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-2 {
+  --x: 46px;
+  --y: 4px;
+  --animation: badge-circle-2;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-3 {
+  --x: -6px;
+  --y: -6px;
+  --animation: badge-circle-3;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-4 {
+  --x: 40px;
+  --y: -6px;
+  --animation: badge-circle-4;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-5 {
+  --x: 6px;
+  --y: -2px;
+  --animation: badge-circle-5;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-6 {
+  --x: 28px;
+  --y: 8px;
+  --animation: badge-circle-6;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-7 {
+  --x: 4px;
+  --y: 14px;
+  --animation: badge-circle-7;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-8 {
+  --x: 14px;
+  --y: -2px;
+  --animation: badge-circle-8;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-9 {
+  --x: 10px;
+  --y: -6px;
+  --animation: badge-circle-9;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-10 {
+  --x: 32px;
+  --y: 8px;
+  --animation: badge-circle-10;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-11 {
+  --x: 2px;
+  --y: 2px;
+  --animation: badge-circle-11;
+}
+
+.eon-role-badge .badge-wrapper .circle.circle-12 {
+  --blur: 7px;
+  --x: 26px;
+  --y: 2px;
+  --animation: badge-circle-12;
+}
+
+@keyframes badge-circle-1 {
+  33% {
+    transform: translate(0px, 8px) translateZ(0);
   }
-  100% {
-    text-shadow: 0 0 20px rgba(93,214,44,1), 0 0 30px rgba(93,214,44,0.5);
-    transform: rotate(15deg) scale(1.1);
+
+  66% {
+    transform: translate(6px, 32px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-2 {
+  33% {
+    transform: translate(40px, -5px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(36px, -24px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-3 {
+  33% {
+    transform: translate(10px, 6px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(6px, 2px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-4 {
+  33% {
+    transform: translate(38px, -6px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(56px, -4px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-5 {
+  33% {
+    transform: translate(42px, 14px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(20px, -16px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-6 {
+  33% {
+    transform: translate(14px, -8px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(38px, -28px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-7 {
+  33% {
+    transform: translate(4px, 14px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(10px, -30px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-8 {
+  33% {
+    transform: translate(16px, -2px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(28px, -10px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-9 {
+  33% {
+    transform: translate(10px, -6px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(40px, -4px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-10 {
+  33% {
+    transform: translate(34px, 10px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(50px, 14px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-11 {
+  33% {
+    transform: translate(2px, 2px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(34px, 10px) translateZ(0);
+  }
+}
+
+@keyframes badge-circle-12 {
+  33% {
+    transform: translate(28px, 0px) translateZ(0);
+  }
+
+  66% {
+    transform: translate(30px, -16px) translateZ(0);
   }
 }
 
@@ -968,7 +1257,23 @@ html, body {
             <h1>Welcome back,</h1>
             <div class="welcome-user-container">
               <div class="welcome-user" id="usernameDisplay">Trader</div>
-              <div class="welcome-user-role">^Eon</div>
+              <button class="eon-role-badge">
+                <div class="badge-wrapper">
+                  <span>EON</span>
+                  <div class="circle circle-12"></div>
+                  <div class="circle circle-11"></div>
+                  <div class="circle circle-10"></div>
+                  <div class="circle circle-9"></div>
+                  <div class="circle circle-8"></div>
+                  <div class="circle circle-7"></div>
+                  <div class="circle circle-6"></div>
+                  <div class="circle circle-5"></div>
+                  <div class="circle circle-4"></div>
+                  <div class="circle circle-3"></div>
+                  <div class="circle circle-2"></div>
+                  <div class="circle circle-1"></div>
+                </div>
+              </button>
             </div>
           </div>
           <div class="session-info">
