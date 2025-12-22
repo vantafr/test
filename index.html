@@ -186,6 +186,80 @@ html, body {
   box-shadow: 0 5px 20px rgba(93,214,44,.4);
 }
 
+/* ===== USERNAME MODAL ===== */
+#usernameModal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1001;
+  justify-content: center;
+  align-items: center;
+}
+
+.username-modal-content {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  border: 2px solid #5DD62C;
+  box-shadow: 0 0 50px rgba(93,214,44,.3);
+}
+
+.username-modal-content h2 {
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 28px;
+  background: linear-gradient(90deg, #5DD62C, #a6ff75);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.username-modal-content p {
+  color: #aaa;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.username-input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #5DD62C;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+}
+
+.username-input:focus {
+  outline: none;
+  box-shadow: 0 0 20px rgba(93,214,44,0.5);
+}
+
+.username-button {
+  background: linear-gradient(90deg, #5DD62C, #a6ff75);
+  color: #0f0f0f;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s;
+  width: 100%;
+}
+
+.username-button:hover {
+  transform: scale(1.05);
+}
+
 /* ===== DASHBOARD LAYOUT ===== */
 #dashboard {
   display: none;
@@ -315,6 +389,11 @@ html, body {
   color: #0f0f0f;
 }
 
+.welcome-user-container {
+  position: relative;
+  display: inline-block;
+}
+
 .welcome-user {
   font-size: 48px;
   font-weight: 700;
@@ -327,18 +406,30 @@ html, body {
     0 0 60px rgba(93,214,44,0.1);
   background-size: 200% 100%;
   animation: glow 2s infinite alternate;
-  position: relative;
   display: inline-block;
 }
 
-.welcome-user::after {
-  content: '^Eon';
-  font-size: 24px;
-  position: relative;
+.welcome-user-role {
+  position: absolute;
   top: -10px;
+  right: -40px;
+  font-size: 18px;
   color: #5DD62C;
-  text-shadow: 0 0 10px rgba(93,214,44,0.7);
-  margin-left: 8px;
+  text-shadow: 0 0 15px rgba(93,214,44,0.8);
+  font-weight: 600;
+  transform: rotate(15deg);
+  animation: roleGlow 3s infinite alternate;
+}
+
+@keyframes roleGlow {
+  0% {
+    text-shadow: 0 0 10px rgba(93,214,44,0.8);
+    transform: rotate(15deg) scale(1);
+  }
+  100% {
+    text-shadow: 0 0 20px rgba(93,214,44,1), 0 0 30px rgba(93,214,44,0.5);
+    transform: rotate(15deg) scale(1.1);
+  }
 }
 
 @keyframes glow {
@@ -366,6 +457,7 @@ html, body {
   background: rgba(93,214,44,0.05);
   border-radius: 15px;
   border-left: 4px solid #5DD62C;
+  position: relative;
 }
 
 .new-badge {
@@ -377,6 +469,7 @@ html, body {
   font-size: 14px;
   box-shadow: 0 4px 15px rgba(93,214,44,0.3);
   animation: pulse 2s infinite;
+  flex-shrink: 0;
 }
 
 @keyframes pulse {
@@ -390,10 +483,20 @@ html, body {
   }
 }
 
+.typing-text-container {
+  position: relative;
+  flex: 1;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
 .typing-text {
   font-size: 18px;
   color: #555;
-  flex: 1;
+  display: inline;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .typing-cursor {
@@ -401,9 +504,12 @@ html, body {
   width: 3px;
   height: 24px;
   background: #5DD62C;
-  margin-left: 5px;
   animation: blink 1s infinite;
   box-shadow: 0 0 10px #5DD62C;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 @keyframes blink {
@@ -746,6 +852,16 @@ html, body {
 
 <div class="grid-wrapper"><div class="grid-background"></div></div>
 
+<!-- Username Modal -->
+<div id="usernameModal" class="modal">
+  <div class="username-modal-content">
+    <h2>Welcome to Eon Algorithms</h2>
+    <p>Please enter your username to access the dashboard. This will be displayed on your profile.</p>
+    <input type="text" id="usernameInput" class="username-input" placeholder="Enter your username" maxlength="20">
+    <button class="username-button" onclick="saveUsername()">Enter Dashboard</button>
+  </div>
+</div>
+
 <!-- Top Bar -->
 <div class="top-bar">
   <img class="logo" src="https://i.pinimg.com/736x/a4/e4/b5/a4e4b5b5a171600c5de2185f2e077a0f.jpg">
@@ -850,7 +966,10 @@ html, body {
         <div class="welcome-header">
           <div class="welcome-text">
             <h1>Welcome back,</h1>
-            <div class="welcome-user" id="usernameDisplay">Trader</div>
+            <div class="welcome-user-container">
+              <div class="welcome-user" id="usernameDisplay">Trader</div>
+              <div class="welcome-user-role">^Eon</div>
+            </div>
           </div>
           <div class="session-info">
             <div style="font-size: 14px; color: #666; margin-bottom: 5px;">Session expires in:</div>
@@ -861,8 +980,10 @@ html, body {
         <!-- Typing Animation -->
         <div class="typing-container">
           <div class="new-badge">NEW</div>
-          <div class="typing-text" id="typingText"></div>
-          <div class="typing-cursor"></div>
+          <div class="typing-text-container">
+            <span class="typing-text" id="typingText"></span>
+            <span class="typing-cursor"></span>
+          </div>
         </div>
         
         <!-- Quick Stats -->
@@ -1051,10 +1172,73 @@ const SECURITY_CONFIG = {
 let sessionTimer = null;
 let securityCheckInterval = null;
 let typingAnimation = null;
+let currentUsername = "";
 
-// ===== TYPING ANIMATION =====
+// ===== USERNAME MANAGEMENT =====
+function showUsernameModal() {
+  document.getElementById('usernameModal').style.display = 'flex';
+  document.getElementById('usernameInput').focus();
+  
+  // Listen for Enter key in input
+  document.getElementById('usernameInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      saveUsername();
+    }
+  });
+}
+
+function saveUsername() {
+  const usernameInput = document.getElementById('usernameInput');
+  const username = usernameInput.value.trim();
+  
+  if (!username) {
+    alert("Please enter a username!");
+    usernameInput.focus();
+    return;
+  }
+  
+  // Save username
+  currentUsername = username;
+  localStorage.setItem('eon_username', username);
+  
+  // Hide modal
+  document.getElementById('usernameModal').style.display = 'none';
+  
+  // Show dashboard
+  showDashboard();
+}
+
+function getStoredUsername() {
+  return localStorage.getItem('eon_username') || "";
+}
+
+function updateUsernameDisplay() {
+  const username = currentUsername || getStoredUsername();
+  const displayElement = document.getElementById('usernameDisplay');
+  
+  if (username) {
+    // Capitalize first letter
+    const formattedUsername = username.charAt(0).toUpperCase() + username.slice(1);
+    displayElement.textContent = formattedUsername;
+    
+    // Add a subtle animation
+    displayElement.style.animation = 'none';
+    setTimeout(() => {
+      displayElement.style.animation = 'glow 2s infinite alternate';
+    }, 10);
+  } else {
+    // Fallback to default based on time of day
+    const hour = new Date().getHours();
+    if (hour < 12) displayElement.textContent = "Trader";
+    else if (hour < 18) displayElement.textContent = "Investor";
+    else displayElement.textContent = "Analyst";
+  }
+}
+
+// ===== TYPING ANIMATION - FIXED =====
 function startTypingAnimation() {
   const typingText = document.getElementById('typingText');
+  const cursor = document.querySelector('.typing-cursor');
   const messages = [
     "AI-Powered market analysis now available",
     "Real-time predictive analytics activated",
@@ -1106,51 +1290,17 @@ function startTypingAnimation() {
   
   // Clear any existing animation
   if (typingAnimation) clearTimeout(typingAnimation);
+  
+  // Set initial position
+  typingText.textContent = "";
   type();
-}
-
-// ===== USERNAME MANAGEMENT =====
-function getWhopUsername() {
-  // Try to extract username from URL parameters
-  const urlParams = new URLSearchParams(window.location.search);
-  const username = urlParams.get('whop_user') || 
-                   urlParams.get('username') || 
-                   localStorage.getItem('eon_username');
-  
-  if (username) {
-    // Capitalize first letter
-    return username.charAt(0).toUpperCase() + username.slice(1);
-  }
-  
-  // Fallback to default based on time of day
-  const hour = new Date().getHours();
-  if (hour < 12) return "Trader";
-  if (hour < 18) return "Investor";
-  return "Analyst";
-}
-
-function updateUsernameDisplay() {
-  const username = getWhopUsername();
-  const displayElement = document.getElementById('usernameDisplay');
-  
-  // Save username for future use
-  localStorage.setItem('eon_username', username);
-  
-  // Update display with animation
-  displayElement.textContent = username;
-  
-  // Add a subtle animation
-  displayElement.style.animation = 'none';
-  setTimeout(() => {
-    displayElement.style.animation = 'glow 2s infinite alternate';
-  }, 10);
 }
 
 // ===== SECURE TOKEN GENERATION =====
 function generateSecureToken() {
   const timestamp = Date.now();
   const random = Math.random().toString(36).substring(2);
-  const username = getWhopUsername();
+  const username = currentUsername || getStoredUsername();
   const hash = btoa(timestamp + SECURITY_CONFIG.TOKEN_SALT + random + navigator.userAgent + username);
   return {
     token: hash.slice(0, 50),
@@ -1242,6 +1392,9 @@ function endSession() {
   // Clear cookie
   document.cookie = "eon_access=; max-age=0; path=/";
   
+  // Reset username
+  currentUsername = "";
+  
   // Stop timers and animations
   if (sessionTimer) clearInterval(sessionTimer);
   if (securityCheckInterval) clearInterval(securityCheckInterval);
@@ -1278,9 +1431,10 @@ function forceLogout() {
 function checkWhopAccess() {
   console.log("Dashboard clicked - checking access...");
   
-  // First check if we have a valid session
-  if (checkSession()) {
+  // First check if we have a valid session and username
+  if (checkSession() && getStoredUsername()) {
     console.log("Valid session found, showing dashboard");
+    currentUsername = getStoredUsername();
     showDashboard();
     return true;
   }
@@ -1305,15 +1459,24 @@ function checkWhopAccess() {
   
   // Grant access if coming from Whop
   if (hasWhopToken || isFromWhop || isInIframe) {
-    console.log("Whop access detected, creating session");
-    // Create new secure session
-    createSecureSession();
+    console.log("Whop access detected");
     
-    // Clean URL parameters
-    const cleanUrl = window.location.origin + window.location.pathname;
-    window.history.replaceState({}, document.title, cleanUrl);
-    
-    showDashboard();
+    // Check if we have a stored username
+    const storedUsername = getStoredUsername();
+    if (storedUsername) {
+      // We have username, create session and show dashboard
+      currentUsername = storedUsername;
+      createSecureSession();
+      
+      // Clean URL parameters
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+      
+      showDashboard();
+    } else {
+      // No username stored, show username modal
+      showUsernameModal();
+    }
     return true;
   }
   
@@ -1325,8 +1488,9 @@ function checkWhopAccess() {
 
 // ===== DASHBOARD FUNCTIONS =====
 function showDashboard() {
-  if (!checkSession()) {
-    console.log("Session check failed, not showing dashboard");
+  if (!checkSession() && !currentUsername) {
+    console.log("No username or session, showing username modal");
+    showUsernameModal();
     return;
   }
   
@@ -1407,6 +1571,7 @@ function goToHome() {
   document.getElementById('homePage').style.display = 'block';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('sessionInfo').style.display = 'none';
+  document.getElementById('usernameModal').style.display = 'none';
   
   // Restore tabs
   document.getElementById('dashboardTab').style.display = 'block';
@@ -1417,7 +1582,7 @@ function goToHome() {
 }
 
 function logout() {
-  if (confirm("Are you sure you want to logout? You'll need to access through Whop again.")) {
+  if (confirm("Are you sure you want to logout? You'll need to enter your username again to access the dashboard.")) {
     endSession();
   }
 }
@@ -1482,6 +1647,9 @@ window.addEventListener('load', function() {
   // Setup sidebar functionality
   setupSidebar();
   
+  // Check for stored username
+  currentUsername = getStoredUsername();
+  
   // Check for Whop token on load
   const urlParams = new URLSearchParams(window.location.search);
   const whopToken = urlParams.get('whop_token');
@@ -1493,13 +1661,20 @@ window.addEventListener('load', function() {
     const cleanUrl = window.location.origin + window.location.pathname;
     window.history.replaceState({}, document.title, cleanUrl);
     
-    // Create session and show dashboard
-    createSecureSession();
-    setTimeout(() => {
-      showDashboard();
-    }, 500);
-  } else if (checkSession()) {
-    // Valid session exists, show dashboard
+    // If we have a username, create session and show dashboard
+    if (currentUsername) {
+      createSecureSession();
+      setTimeout(() => {
+        showDashboard();
+      }, 500);
+    } else {
+      // Show username modal
+      setTimeout(() => {
+        showUsernameModal();
+      }, 500);
+    }
+  } else if (checkSession() && currentUsername) {
+    // Valid session exists and we have username, show dashboard
     console.log("Valid session found on load, showing dashboard");
     showDashboard();
   } else {
@@ -1571,6 +1746,12 @@ document.getElementById('userNotFoundModal').addEventListener('click', function(
 document.getElementById('accessExpiredModal').addEventListener('click', function(e) {
   if (e.target === this) {
     forceLogout();
+  }
+});
+
+document.getElementById('usernameModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    // Don't close on background click - force user to enter username
   }
 });
 
