@@ -186,80 +186,6 @@ html, body {
   box-shadow: 0 5px 20px rgba(93,214,44,.4);
 }
 
-/* ===== USERNAME MODAL ===== */
-#usernameModal {
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 1001;
-  justify-content: center;
-  align-items: center;
-}
-
-.username-modal-content {
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-  padding: 40px;
-  border-radius: 20px;
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-  border: 2px solid #5DD62C;
-  box-shadow: 0 0 50px rgba(93,214,44,.3);
-}
-
-.username-modal-content h2 {
-  color: #fff;
-  margin-bottom: 20px;
-  font-size: 28px;
-  background: linear-gradient(90deg, #5DD62C, #a6ff75);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.username-modal-content p {
-  color: #aaa;
-  margin-bottom: 30px;
-  line-height: 1.5;
-}
-
-.username-input {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
-  background: rgba(255,255,255,0.1);
-  border: 2px solid #5DD62C;
-  border-radius: 10px;
-  color: white;
-  font-size: 16px;
-  text-align: center;
-}
-
-.username-input:focus {
-  outline: none;
-  box-shadow: 0 0 20px rgba(93,214,44,0.5);
-}
-
-.username-button {
-  background: linear-gradient(90deg, #5DD62C, #a6ff75);
-  color: #0f0f0f;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 999px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 16px;
-  transition: transform 0.2s;
-  width: 100%;
-}
-
-.username-button:hover {
-  transform: scale(1.05);
-}
-
 /* ===== DASHBOARD LAYOUT ===== */
 #dashboard {
   display: none;
@@ -347,599 +273,30 @@ html, body {
   padding: 0 40px;
 }
 
-/* ===== WELCOME SECTION ===== */
-.welcome-section {
-  background: linear-gradient(135deg, rgba(93,214,44,0.05), rgba(93,214,44,0.02));
-  border-radius: 20px;
-  padding: 40px;
-  margin-bottom: 60px;
-  border: 1px solid rgba(93,214,44,0.1);
-  box-shadow: 0 10px 40px rgba(93,214,44,0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.welcome-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #5DD62C, #a6ff75, #5DD62C);
-  background-size: 200% 100%;
-  animation: shimmer 3s infinite linear;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.welcome-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.welcome-text h1 {
-  font-size: 42px;
-  margin: 0 0 10px 0;
-  color: #0f0f0f;
-}
-
-.welcome-user-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 5px;
-}
-
-.welcome-user {
-  font-size: 48px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #5DD62C, #a6ff75, #5DD62C);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 
-    0 0 20px rgba(93,214,44,0.5),
-    0 0 40px rgba(93,214,44,0.3),
-    0 0 60px rgba(93,214,44,0.1);
-  background-size: 200% 100%;
-  animation: glow 2s infinite alternate;
-  display: inline-block;
-}
-
-/* ===== EON ROLE BADGE ===== */
-.eon-role-badge {
-  --duration: 7s;
-  --easing: linear;
-  --c-color-1: rgba(93, 214, 44, 0.7);
-  --c-color-2: #5DD62C;
-  --c-color-3: #a6ff75;
-  --c-color-4: rgba(166, 255, 117, 0.7);
-  --c-shadow: rgba(93, 214, 44, 0.5);
-  --c-shadow-inset-top: rgba(93, 214, 44, 0.9);
-  --c-shadow-inset-bottom: rgba(166, 255, 117, 0.8);
-  --c-radial-inner: #5DD62C;
-  --c-radial-outer: #a6ff75;
-  --c-color: white;
-  
-  -webkit-tap-highlight-color: transparent;
-  -webkit-appearance: none;
-  outline: none;
-  position: relative;
-  cursor: default;
-  border: none;
-  border-radius: 16px;
-  padding: 0;
-  margin: 0;
+.dashboard-header {
   text-align: center;
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: var(--c-color);
-  background: radial-gradient(
-    circle,
-    var(--c-radial-inner),
-    var(--c-radial-outer) 80%
-  );
-  box-shadow: 0 0 10px var(--c-shadow);
-  width: auto;
-  height: 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 60px;
 }
 
-.eon-role-badge:before {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  z-index: 3;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 16px;
-  box-shadow:
-    inset 0 2px 8px var(--c-shadow-inset-top),
-    inset 0 -2px 4px var(--c-shadow-inset-bottom);
-}
-
-.eon-role-badge .badge-wrapper {
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-  overflow: hidden;
-  border-radius: 16px;
-  min-width: 60px;
-  padding: 6px 12px;
-  position: relative;
-  z-index: 2;
-}
-
-.eon-role-badge .badge-wrapper span {
-  display: inline-block;
-  position: relative;
-  z-index: 1;
-  font-size: 11px;
-  font-weight: 700;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-
-.eon-role-badge .badge-wrapper .circle {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  filter: blur(var(--blur, 4px));
-  background: var(--background, transparent);
-  transform: translate(var(--x, 0), var(--y, 0)) translateZ(0);
-  animation: var(--animation, none) var(--duration) var(--easing) infinite;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-1,
-.eon-role-badge .badge-wrapper .circle.circle-9,
-.eon-role-badge .badge-wrapper .circle.circle-10 {
-  --background: var(--c-color-4);
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-3,
-.eon-role-badge .badge-wrapper .circle.circle-4 {
-  --background: var(--c-color-2);
-  --blur: 7px;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-5,
-.eon-role-badge .badge-wrapper .circle.circle-6 {
-  --background: var(--c-color-3);
-  --blur: 8px;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-2,
-.eon-role-badge .badge-wrapper .circle.circle-7,
-.eon-role-badge .badge-wrapper .circle.circle-8,
-.eon-role-badge .badge-wrapper .circle.circle-11,
-.eon-role-badge .badge-wrapper .circle.circle-12 {
-  --background: var(--c-color-1);
-  --blur: 6px;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-1 {
-  --x: 0;
-  --y: -20px;
-  --animation: badge-circle-1;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-2 {
-  --x: 46px;
-  --y: 4px;
-  --animation: badge-circle-2;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-3 {
-  --x: -6px;
-  --y: -6px;
-  --animation: badge-circle-3;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-4 {
-  --x: 40px;
-  --y: -6px;
-  --animation: badge-circle-4;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-5 {
-  --x: 6px;
-  --y: -2px;
-  --animation: badge-circle-5;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-6 {
-  --x: 28px;
-  --y: 8px;
-  --animation: badge-circle-6;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-7 {
-  --x: 4px;
-  --y: 14px;
-  --animation: badge-circle-7;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-8 {
-  --x: 14px;
-  --y: -2px;
-  --animation: badge-circle-8;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-9 {
-  --x: 10px;
-  --y: -6px;
-  --animation: badge-circle-9;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-10 {
-  --x: 32px;
-  --y: 8px;
-  --animation: badge-circle-10;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-11 {
-  --x: 2px;
-  --y: 2px;
-  --animation: badge-circle-11;
-}
-
-.eon-role-badge .badge-wrapper .circle.circle-12 {
-  --blur: 7px;
-  --x: 26px;
-  --y: 2px;
-  --animation: badge-circle-12;
-}
-
-@keyframes badge-circle-1 {
-  33% {
-    transform: translate(0px, 8px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(6px, 32px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-2 {
-  33% {
-    transform: translate(40px, -5px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(36px, -24px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-3 {
-  33% {
-    transform: translate(10px, 6px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(6px, 2px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-4 {
-  33% {
-    transform: translate(38px, -6px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(56px, -4px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-5 {
-  33% {
-    transform: translate(42px, 14px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(20px, -16px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-6 {
-  33% {
-    transform: translate(14px, -8px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(38px, -28px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-7 {
-  33% {
-    transform: translate(4px, 14px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(10px, -30px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-8 {
-  33% {
-    transform: translate(16px, -2px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(28px, -10px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-9 {
-  33% {
-    transform: translate(10px, -6px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(40px, -4px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-10 {
-  33% {
-    transform: translate(34px, 10px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(50px, 14px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-11 {
-  33% {
-    transform: translate(2px, 2px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(34px, 10px) translateZ(0);
-  }
-}
-
-@keyframes badge-circle-12 {
-  33% {
-    transform: translate(28px, 0px) translateZ(0);
-  }
-
-  66% {
-    transform: translate(30px, -16px) translateZ(0);
-  }
-}
-
-@keyframes glow {
-  0% {
-    text-shadow: 
-      0 0 20px rgba(93,214,44,0.5),
-      0 0 40px rgba(93,214,44,0.3),
-      0 0 60px rgba(93,214,44,0.1);
-  }
-  100% {
-    text-shadow: 
-      0 0 30px rgba(93,214,44,0.7),
-      0 0 50px rgba(93,214,44,0.5),
-      0 0 70px rgba(93,214,44,0.3);
-  }
-}
-
-/* ===== TYPING ANIMATION ===== */
-.typing-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 30px;
-  padding: 20px;
-  background: rgba(93,214,44,0.05);
-  border-radius: 15px;
-  border-left: 4px solid #5DD62C;
-  position: relative;
-}
-
-.new-badge {
-  background: linear-gradient(90deg, #5DD62C, #a6ff75);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 14px;
-  box-shadow: 0 4px 15px rgba(93,214,44,0.3);
-  animation: pulse 2s infinite;
-  flex-shrink: 0;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 4px 15px rgba(93,214,44,0.3);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 4px 25px rgba(93,214,44,0.5);
-    transform: scale(1.05);
-  }
-}
-
-.typing-text-container {
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  min-height: 28px;
-}
-
-.typing-text-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-
-.typing-text {
-  font-size: 18px;
-  color: #555;
-  display: inline;
-  white-space: nowrap;
-}
-
-.typing-cursor {
-  display: inline-block;
-  width: 3px;
-  height: 24px;
-  background: #5DD62C;
-  animation: blink 1s infinite;
-  box-shadow: 0 0 10px #5DD62C;
-  margin-left: 2px;
-  position: relative;
-  top: 0;
-}
-
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-/* ===== UPDATED QUICK STATS WITH ICONS ===== */
-.quick-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 40px;
-}
-
-.stat-card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-  border: 1px solid rgba(93,214,44,0.1);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(93,214,44,0.15);
-  border-color: rgba(93,214,44,0.3);
-}
-
-.stat-card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.stat-icon {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #5DD62C, #a6ff75);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.stat-icon svg {
-  width: 20px;
-  height: 20px;
-  stroke: white;
-  stroke-width: 2;
-  fill: none;
-}
-
-.stat-card-header h4 {
-  margin: 0;
+.dashboard-header h1 {
+  font-size: 42px;
+  margin-bottom: 20px;
   color: #0f0f0f;
-  font-size: 16px;
-  font-weight: 600;
 }
 
-.stat-value {
-  font-size: 28px;
-  font-weight: 700;
-  color: #5DD62C;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: baseline;
-  gap: 5px;
-}
-
-.stat-change {
-  font-size: 12px;
+.welcome-message {
+  font-size: 18px;
   color: #666;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.stat-change.positive {
-  color: #5DD62C;
-}
-
-.stat-change.negative {
-  color: #ff4b4b;
-}
-
-.stat-trend {
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-}
-
-.stat-trend.up {
-  border-bottom: 5px solid #5DD62C;
-}
-
-.stat-trend.down {
-  border-top: 5px solid #ff4b4b;
-}
-
-/* Market data refresh */
-.refresh-indicator {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 10px;
-  color: #888;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.refresh-indicator .dot {
-  width: 6px;
-  height: 6px;
-  background: #5DD62C;
-  border-radius: 50%;
-  animation: pulseDot 2s infinite;
-}
-
-@keyframes pulseDot {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
-
-/* ===== DASHBOARD GRID ===== */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 40px;
-  margin-top: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .dashboard-card {
@@ -1192,6 +549,46 @@ html, body {
   transform: scale(1.05);
 }
 
+/* ===== LOGIN MODAL ===== */
+#loginModal .modal-content {
+  max-width: 450px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  color: #fff;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #5DD62C;
+  box-shadow: 0 0 0 2px rgba(93,214,44,0.2);
+}
+
 /* ===== ACCESS EXPIRED MODAL ===== */
 #accessExpiredModal .modal-content {
   border-color: #ff4b4b;
@@ -1218,16 +615,6 @@ html, body {
 <body>
 
 <div class="grid-wrapper"><div class="grid-background"></div></div>
-
-<!-- Username Modal -->
-<div id="usernameModal" class="modal">
-  <div class="username-modal-content">
-    <h2>Welcome to Eon Algorithms</h2>
-    <p>Please enter your username to access the dashboard. This will be displayed on your profile.</p>
-    <input type="text" id="usernameInput" class="username-input" placeholder="Enter your username" maxlength="20">
-    <button class="username-button" onclick="saveUsername()">Enter Dashboard</button>
-  </div>
-</div>
 
 <!-- Top Bar -->
 <div class="top-bar">
@@ -1328,135 +715,14 @@ html, body {
 
     <!-- Dashboard Content -->
     <div class="dashboard-content">
-      <!-- Welcome Section -->
-      <div class="welcome-section">
-        <div class="welcome-header">
-          <div class="welcome-text">
-            <h1>Welcome back,</h1>
-            <div class="welcome-user-container">
-              <div class="welcome-user" id="usernameDisplay">Trader</div>
-              <button class="eon-role-badge">
-                <div class="badge-wrapper">
-                  <span>EON</span>
-                  <div class="circle circle-12"></div>
-                  <div class="circle circle-11"></div>
-                  <div class="circle circle-10"></div>
-                  <div class="circle circle-9"></div>
-                  <div class="circle circle-8"></div>
-                  <div class="circle circle-7"></div>
-                  <div class="circle circle-6"></div>
-                  <div class="circle circle-5"></div>
-                  <div class="circle circle-4"></div>
-                  <div class="circle circle-3"></div>
-                  <div class="circle circle-2"></div>
-                  <div class="circle circle-1"></div>
-                </div>
-              </button>
-            </div>
-          </div>
-          <div class="session-info">
-            <div style="font-size: 14px; color: #666; margin-bottom: 5px;">Session expires in:</div>
-            <div style="font-size: 18px; font-weight: 600; color: #5DD62C;" id="dashboardTimer"></div>
-          </div>
-        </div>
-        
-        <!-- Typing Animation -->
-        <div class="typing-container">
-          <div class="new-badge">LIVE</div>
-          <div class="typing-text-container">
-            <div class="typing-text-wrapper">
-              <span class="typing-text" id="typingText"></span>
-              <span class="typing-cursor"></span>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Quick Stats - Updated with Real Market Data -->
-        <div class="quick-stats" id="quickStats">
-          <div class="stat-card">
-            <div class="refresh-indicator">
-              <span class="dot"></span>
-              <span>Live</span>
-            </div>
-            <div class="stat-card-header">
-              <div class="stat-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 1v3M12 20v3M4 4l2 2M18 18l2 2M1 12h3M20 12h3M4 20l2-2M18 4l2-2"/>
-                </svg>
-              </div>
-              <h4>BTC Price</h4>
-            </div>
-            <div class="stat-value" id="btcPrice">$--</div>
-            <div class="stat-change" id="btcChange">
-              <span class="stat-trend up"></span>
-              <span>--% (24h)</span>
-            </div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="refresh-indicator">
-              <span class="dot"></span>
-              <span>Live</span>
-            </div>
-            <div class="stat-card-header">
-              <div class="stat-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                </svg>
-              </div>
-              <h4>Market Cap</h4>
-            </div>
-            <div class="stat-value" id="marketCap">$--T</div>
-            <div class="stat-change" id="marketCapChange">
-              <span class="stat-trend up"></span>
-              <span>--% (24h)</span>
-            </div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="refresh-indicator">
-              <span class="dot"></span>
-              <span>Live</span>
-            </div>
-            <div class="stat-card-header">
-              <div class="stat-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M2 12h20M12 2v20M4 4l2 2M18 18l2 2M4 20l2-2M18 4l2-2"/>
-                </svg>
-              </div>
-              <h4>Fear & Greed</h4>
-            </div>
-            <div class="stat-value" id="fearGreed">--</div>
-            <div class="stat-change" id="fearGreedChange">
-              <span class="stat-trend up"></span>
-              <span>-- vs yesterday</span>
-            </div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="refresh-indicator">
-              <span class="dot"></span>
-              <span>Live</span>
-            </div>
-            <div class="stat-card-header">
-              <div class="stat-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-              </div>
-              <h4>AI Accuracy</h4>
-            </div>
-            <div class="stat-value" id="aiAccuracy">--%</div>
-            <div class="stat-change positive">
-              <span class="stat-trend up"></span>
-              <span>+2.1% this week</span>
-            </div>
-          </div>
-        </div>
+      <div class="dashboard-header">
+        <h1>Welcome to Eon Dashboard</h1>
+        <p class="welcome-message">Professional trading tools and AI-powered analysis at your fingertips. Real-time signals, portfolio tracking, and market insights.</p>
+        <p style="color: #666; font-size: 14px; margin-top: 10px;">Session expires in: <span id="dashboardTimer"></span></p>
       </div>
 
-      <!-- Dashboard Grid -->
       <div class="dashboard-grid">
+        <!-- Dashboard cards remain the same -->
         <div class="dashboard-card">
           <div class="card-header">
             <div class="card-icon">
@@ -1478,8 +744,22 @@ html, body {
                 <div class="stat-label">Live Signals</div>
               </div>
             </div>
-            <ul class="signal-list" id="liveSignals">
-              <!-- Signals will be populated by JavaScript -->
+            <ul class="signal-list">
+              <li class="signal-item">
+                <span class="signal-pair">BTC/USDT</span>
+                <span class="signal-type signal-buy">BUY</span>
+                <span class="signal-price">$43,250</span>
+              </li>
+              <li class="signal-item">
+                <span class="signal-pair">ETH/USDT</span>
+                <span class="signal-type signal-sell">SELL</span>
+                <span class="signal-price">$2,340</span>
+              </li>
+              <li class="signal-item">
+                <span class="signal-pair">SOL/USDT</span>
+                <span class="signal-type signal-buy">BUY</span>
+                <span class="signal-price">$98.50</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -1496,7 +776,7 @@ html, body {
           <div class="card-content">
             <p>Advanced AI algorithms analyzing market trends and predicting movements.</p>
             <div class="ai-prediction">
-              <div class="prediction-value" id="aiPrediction">+2.8%</div>
+              <div class="prediction-value">+2.8%</div>
               <p>Predicted market movement for next 24 hours</p>
             </div>
             <div class="recent-activity">
@@ -1507,7 +787,7 @@ html, body {
                   </svg>
                 </div>
                 <div class="activity-details">
-                  <div class="activity-action" id="analysis1">Bullish trend detected</div>
+                  <div class="activity-action">Bullish trend detected</div>
                   <div class="activity-time">2 minutes ago</div>
                 </div>
               </div>
@@ -1518,7 +798,7 @@ html, body {
                   </svg>
                 </div>
                 <div class="activity-details">
-                  <div class="activity-action" id="analysis2">Volume spike analyzed</div>
+                  <div class="activity-action">Volume spike analyzed</div>
                   <div class="activity-time">15 minutes ago</div>
                 </div>
               </div>
@@ -1551,20 +831,20 @@ html, body {
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
               </svg>
             </div>
-            <h3>Market Overview</h3>
+            <h3>Portfolio Tracker</h3>
           </div>
           <div class="card-content">
             <div class="stats-grid">
               <div class="stat-item">
-                <div class="stat-value" id="totalVolume">$--B</div>
-                <div class="stat-label">24h Volume</div>
+                <div class="stat-value">$24,580</div>
+                <div class="stat-label">Total Value</div>
               </div>
               <div class="stat-item">
-                <div class="stat-value" id="dominance">--%</div>
-                <div class="stat-label">BTC Dominance</div>
+                <div class="stat-value">+12.5%</div>
+                <div class="stat-label">24h Change</div>
               </div>
             </div>
-            <p style="margin-top: 20px; font-size: 14px;">Real-time market data from top exchanges.</p>
+            <p style="margin-top: 20px; font-size: 14px;">Connected to your exchange accounts for real-time tracking.</p>
           </div>
         </div>
       </div>
@@ -1591,6 +871,37 @@ html, body {
   </div>
 </div>
 
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <h2>👋 Welcome to Eon Dashboard</h2>
+    <p>Please enter your name to access the dashboard</p>
+    
+    <form id="loginForm" class="login-form">
+      <div class="form-group">
+        <label for="userName">Your Name</label>
+        <input type="text" id="userName" placeholder="Enter your name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="accessCode">Access Code (Optional)</label>
+        <input type="text" id="accessCode" placeholder="Enter access code if you have one">
+      </div>
+      
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="modal-button" onclick="processLogin()">Access Dashboard</button>
+        <button type="button" onclick="closeLoginModal()" style="background: #333; color: white; border: 1px solid #444; padding: 12px 30px; border-radius: 999px; cursor: pointer;">
+          Cancel
+        </button>
+      </div>
+    </form>
+    
+    <p style="margin-top: 20px; font-size: 14px; color: #666;">
+      Don't have access? <a href="#" onclick="window.open('https://whop.com', '_blank'); return false;" style="color: #5DD62C;">Purchase through Whop</a>
+    </p>
+  </div>
+</div>
+
 <script>
 // ===== ENHANCED SECURITY SYSTEM =====
 const SECURITY_CONFIG = {
@@ -1601,329 +912,19 @@ const SECURITY_CONFIG = {
 
 let sessionTimer = null;
 let securityCheckInterval = null;
-let typingAnimation = null;
-let marketDataInterval = null;
-let currentUsername = "";
-
-// ===== LIVE MARKET DATA =====
-async function fetchMarketData() {
-  try {
-    // Using CoinGecko API for live market data
-    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,cardano&vs_currencies=usd&include_24hr_change=true&include_market_cap=true');
-    const data = await response.json();
-    
-    // Fetch Fear & Greed Index
-    const fearGreedResponse = await fetch('https://api.alternative.me/fng/?limit=2');
-    const fearGreedData = await fearGreedResponse.json();
-    
-    // Fetch global market data
-    const globalResponse = await fetch('https://api.coingecko.com/api/v3/global');
-    const globalData = await globalResponse.json();
-    
-    return { cryptoData: data, fearGreedData: fearGreedData, globalData: globalData };
-  } catch (error) {
-    console.error('Error fetching market data:', error);
-    return null;
-  }
-}
-
-function formatNumber(num) {
-  if (num >= 1e9) {
-    return '$' + (num / 1e9).toFixed(2) + 'B';
-  } else if (num >= 1e6) {
-    return '$' + (num / 1e6).toFixed(2) + 'M';
-  } else if (num >= 1e3) {
-    return '$' + (num / 1e3).toFixed(2) + 'K';
-  } else {
-    return '$' + num.toFixed(2);
-  }
-}
-
-function updateMarketData() {
-  fetchMarketData().then(data => {
-    if (!data) {
-      // Fallback to simulated data if API fails
-      updateWithSimulatedData();
-      return;
-    }
-    
-    const { cryptoData, fearGreedData, globalData } = data;
-    
-    // Update BTC Price
-    const btcPrice = cryptoData.bitcoin?.usd || 0;
-    const btcChange = cryptoData.bitcoin?.usd_24h_change || 0;
-    document.getElementById('btcPrice').textContent = formatNumber(btcPrice);
-    document.getElementById('btcChange').innerHTML = `
-      <span class="stat-trend ${btcChange >= 0 ? 'up' : 'down'}"></span>
-      <span>${btcChange >= 0 ? '+' : ''}${btcChange.toFixed(2)}% (24h)</span>
-    `;
-    
-    // Update Market Cap
-    const marketCap = globalData.data?.total_market_cap?.usd || 0;
-    const marketCapChange = 0.5; // Simplified for demo
-    document.getElementById('marketCap').textContent = '$' + (marketCap / 1e12).toFixed(2) + 'T';
-    document.getElementById('marketCapChange').innerHTML = `
-      <span class="stat-trend ${marketCapChange >= 0 ? 'up' : 'down'}"></span>
-      <span>${marketCapChange >= 0 ? '+' : ''}${marketCapChange.toFixed(2)}% (24h)</span>
-    `;
-    
-    // Update Fear & Greed Index
-    const fearGreedValue = fearGreedData.data?.[0]?.value || 50;
-    const fearGreedPrev = fearGreedData.data?.[1]?.value || 50;
-    const fearGreedChange = fearGreedValue - fearGreedPrev;
-    document.getElementById('fearGreed').textContent = fearGreedValue;
-    document.getElementById('fearGreedChange').innerHTML = `
-      <span class="stat-trend ${fearGreedChange >= 0 ? 'up' : 'down'}"></span>
-      <span>${fearGreedChange >= 0 ? '+' : ''}${fearGreedChange} vs yesterday</span>
-    `;
-    
-    // Update AI Accuracy (simulated)
-    const aiAccuracy = 94.7;
-    document.getElementById('aiAccuracy').textContent = `${aiAccuracy}%`;
-    
-    // Update Signals List
-    updateLiveSignals(cryptoData);
-    
-    // Update AI Prediction
-    updateAIPrediction(cryptoData);
-    
-    // Update Market Overview
-    const totalVolume = globalData.data?.total_volume?.usd || 0;
-    const btcDominance = globalData.data?.market_cap_percentage?.btc || 0;
-    document.getElementById('totalVolume').textContent = formatNumber(totalVolume);
-    document.getElementById('dominance').textContent = `${btcDominance.toFixed(1)}%`;
-    
-  }).catch(error => {
-    console.error('Error updating market data:', error);
-    updateWithSimulatedData();
-  });
-}
-
-function updateWithSimulatedData() {
-  // Fallback simulated data
-  const simulatedData = {
-    btcPrice: 43250 + (Math.random() * 1000 - 500),
-    btcChange: 1.2 + (Math.random() * 4 - 2),
-    marketCap: 1.65e12 + (Math.random() * 0.1e12 - 0.05e12),
-    marketCapChange: 0.8 + (Math.random() * 2 - 1),
-    fearGreedValue: 65 + (Math.random() * 20 - 10),
-    fearGreedChange: 3 + (Math.random() * 6 - 3),
-    aiAccuracy: 94.7 + (Math.random() * 2 - 1),
-    totalVolume: 85e9 + (Math.random() * 20e9 - 10e9),
-    btcDominance: 52.5 + (Math.random() * 5 - 2.5)
-  };
-  
-  document.getElementById('btcPrice').textContent = formatNumber(simulatedData.btcPrice);
-  document.getElementById('btcChange').innerHTML = `
-    <span class="stat-trend ${simulatedData.btcChange >= 0 ? 'up' : 'down'}"></span>
-    <span>${simulatedData.btcChange >= 0 ? '+' : ''}${simulatedData.btcChange.toFixed(2)}% (24h)</span>
-  `;
-  
-  document.getElementById('marketCap').textContent = '$' + (simulatedData.marketCap / 1e12).toFixed(2) + 'T';
-  document.getElementById('marketCapChange').innerHTML = `
-    <span class="stat-trend ${simulatedData.marketCapChange >= 0 ? 'up' : 'down'}"></span>
-    <span>${simulatedData.marketCapChange >= 0 ? '+' : ''}${simulatedData.marketCapChange.toFixed(2)}% (24h)</span>
-  `;
-  
-  document.getElementById('fearGreed').textContent = Math.round(simulatedData.fearGreedValue);
-  document.getElementById('fearGreedChange').innerHTML = `
-    <span class="stat-trend ${simulatedData.fearGreedChange >= 0 ? 'up' : 'down'}"></span>
-    <span>${simulatedData.fearGreedChange >= 0 ? '+' : ''}${Math.round(simulatedData.fearGreedChange)} vs yesterday</span>
-  `;
-  
-  document.getElementById('aiAccuracy').textContent = `${simulatedData.aiAccuracy.toFixed(1)}%`;
-  document.getElementById('totalVolume').textContent = formatNumber(simulatedData.totalVolume);
-  document.getElementById('dominance').textContent = `${simulatedData.btcDominance.toFixed(1)}%`;
-  
-  updateLiveSignals();
-  updateAIPrediction();
-}
-
-function updateLiveSignals(cryptoData = null) {
-  const signals = [
-    { pair: 'BTC/USDT', type: 'BUY', price: cryptoData?.bitcoin?.usd || 43250 + (Math.random() * 1000 - 500) },
-    { pair: 'ETH/USDT', type: cryptoData?.ethereum?.usd_24h_change > 0 ? 'BUY' : 'SELL', price: cryptoData?.ethereum?.usd || 2340 + (Math.random() * 100 - 50) },
-    { pair: 'SOL/USDT', type: cryptoData?.solana?.usd_24h_change > 0 ? 'BUY' : 'SELL', price: cryptoData?.solana?.usd || 98.50 + (Math.random() * 10 - 5) },
-    { pair: 'ADA/USDT', type: cryptoData?.cardano?.usd_24h_change > 0 ? 'BUY' : 'SELL', price: cryptoData?.cardano?.usd || 0.58 + (Math.random() * 0.1 - 0.05) }
-  ];
-  
-  const signalsList = document.getElementById('liveSignals');
-  signalsList.innerHTML = '';
-  
-  signals.forEach(signal => {
-    const li = document.createElement('li');
-    li.className = 'signal-item';
-    li.innerHTML = `
-      <span class="signal-pair">${signal.pair}</span>
-      <span class="signal-type signal-${signal.type.toLowerCase()}">${signal.type}</span>
-      <span class="signal-price">${formatNumber(signal.price)}</span>
-    `;
-    signalsList.appendChild(li);
-  });
-}
-
-function updateAIPrediction(cryptoData = null) {
-  const predictions = ['+2.8%', '+1.5%', '-0.8%', '+3.2%', '-1.1%', '+4.5%'];
-  const randomPrediction = predictions[Math.floor(Math.random() * predictions.length)];
-  document.getElementById('aiPrediction').textContent = randomPrediction;
-  
-  // Update analysis messages
-  const analysisMessages = [
-    'Bullish trend detected on BTC',
-    'Volume spike analyzed on ETH',
-    'Support level forming on SOL',
-    'Resistance breaking on ADA',
-    'MACD crossover detected',
-    'RSI showing oversold conditions'
-  ];
-  
-  const randomAnalysis1 = analysisMessages[Math.floor(Math.random() * analysisMessages.length)];
-  const randomAnalysis2 = analysisMessages[Math.floor(Math.random() * analysisMessages.length)];
-  
-  document.getElementById('analysis1').textContent = randomAnalysis1;
-  document.getElementById('analysis2').textContent = randomAnalysis2;
-}
-
-// ===== USERNAME MANAGEMENT =====
-function showUsernameModal() {
-  document.getElementById('usernameModal').style.display = 'flex';
-  document.getElementById('usernameInput').focus();
-  
-  // Listen for Enter key in input
-  document.getElementById('usernameInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      saveUsername();
-    }
-  });
-}
-
-function saveUsername() {
-  const usernameInput = document.getElementById('usernameInput');
-  const username = usernameInput.value.trim();
-  
-  if (!username) {
-    alert("Please enter a username!");
-    usernameInput.focus();
-    return;
-  }
-  
-  // Save username
-  currentUsername = username;
-  localStorage.setItem('eon_username', username);
-  
-  // Hide modal
-  document.getElementById('usernameModal').style.display = 'none';
-  
-  // Show dashboard
-  showDashboard();
-}
-
-function getStoredUsername() {
-  return localStorage.getItem('eon_username') || "";
-}
-
-function updateUsernameDisplay() {
-  const username = currentUsername || getStoredUsername();
-  const displayElement = document.getElementById('usernameDisplay');
-  
-  if (username) {
-    // Capitalize first letter
-    const formattedUsername = username.charAt(0).toUpperCase() + username.slice(1);
-    displayElement.textContent = formattedUsername;
-    
-    // Add a subtle animation
-    displayElement.style.animation = 'none';
-    setTimeout(() => {
-      displayElement.style.animation = 'glow 2s infinite alternate';
-    }, 10);
-  } else {
-    // Fallback to default based on time of day
-    const hour = new Date().getHours();
-    if (hour < 12) displayElement.textContent = "Trader";
-    else if (hour < 18) displayElement.textContent = "Investor";
-    else displayElement.textContent = "Analyst";
-  }
-}
-
-// ===== TYPING ANIMATION =====
-function startTypingAnimation() {
-  const typingText = document.getElementById('typingText');
-  const messages = [
-    "Live market data streaming in real-time",
-    "AI algorithms analyzing price movements",
-    "Predictive analytics processing market signals",
-    "Neural networks detecting trading patterns"
-  ];
-  
-  let messageIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-  let isWaiting = false;
-  
-  function type() {
-    const currentMessage = messages[messageIndex];
-    
-    if (isWaiting) {
-      isWaiting = false;
-      setTimeout(() => {
-        isDeleting = true;
-        type();
-      }, 1500);
-      return;
-    }
-    
-    if (isDeleting) {
-      typingText.textContent = currentMessage.substring(0, charIndex - 1);
-      charIndex--;
-      
-      if (charIndex === 0) {
-        isDeleting = false;
-        messageIndex = (messageIndex + 1) % messages.length;
-        setTimeout(type, 500);
-        return;
-      }
-    } else {
-      typingText.textContent = currentMessage.substring(0, charIndex + 1);
-      charIndex++;
-      
-      if (charIndex === currentMessage.length) {
-        isWaiting = true;
-        setTimeout(type, 1000);
-        return;
-      }
-    }
-    
-    const speed = isDeleting ? 50 : 100;
-    typingAnimation = setTimeout(type, speed);
-  }
-  
-  // Clear any existing animation
-  if (typingAnimation) clearTimeout(typingAnimation);
-  
-  // Set initial position
-  typingText.textContent = "";
-  charIndex = 0;
-  isDeleting = false;
-  isWaiting = false;
-  messageIndex = 0;
-  
-  // Start animation
-  setTimeout(type, 500);
-}
 
 // ===== SECURE TOKEN GENERATION =====
-function generateSecureToken() {
+function generateSecureToken(userName) {
   const timestamp = Date.now();
   const random = Math.random().toString(36).substring(2);
-  const username = currentUsername || getStoredUsername();
-  const hash = btoa(timestamp + SECURITY_CONFIG.TOKEN_SALT + random + navigator.userAgent + username);
+  const hash = btoa(timestamp + SECURITY_CONFIG.TOKEN_SALT + random + navigator.userAgent + userName);
   return {
     token: hash.slice(0, 50),
     timestamp: timestamp,
     expires: timestamp + SECURITY_CONFIG.SESSION_DURATION,
     userAgent: navigator.userAgent,
     referrer: document.referrer || 'direct',
-    username: username
+    userName: userName
   };
 }
 
@@ -1946,19 +947,20 @@ function validateToken(tokenData) {
   
   // Verify token integrity
   const expectedHash = btoa(tokenData.timestamp + SECURITY_CONFIG.TOKEN_SALT + 
-                          tokenData.token.slice(10, 20) + tokenData.userAgent);
+                          tokenData.token.slice(10, 20) + tokenData.userAgent + tokenData.userName);
   
   return tokenData.token.startsWith(expectedHash.slice(0, 10));
 }
 
 // ===== SECURE SESSION MANAGEMENT =====
-function createSecureSession() {
-  const tokenData = generateSecureToken();
+function createSecureSession(userName) {
+  const tokenData = generateSecureToken(userName);
   
   // Store with multiple layers
   localStorage.setItem('eon_session_token', JSON.stringify(tokenData));
   localStorage.setItem('eon_session_active', 'true');
   localStorage.setItem('eon_session_start', Date.now().toString());
+  localStorage.setItem('eon_user_name', userName);
   
   // Add to sessionStorage for tab-specific access
   sessionStorage.setItem('eon_tab_token', tokenData.token.slice(0, 20));
@@ -2001,20 +1003,15 @@ function endSession() {
   localStorage.removeItem('eon_session_token');
   localStorage.removeItem('eon_session_active');
   localStorage.removeItem('eon_session_start');
-  localStorage.removeItem('eon_username');
+  localStorage.removeItem('eon_user_name');
   sessionStorage.removeItem('eon_tab_token');
   
   // Clear cookie
   document.cookie = "eon_access=; max-age=0; path=/";
   
-  // Reset username
-  currentUsername = "";
-  
-  // Stop timers and animations
+  // Stop timers
   if (sessionTimer) clearInterval(sessionTimer);
   if (securityCheckInterval) clearInterval(securityCheckInterval);
-  if (typingAnimation) clearTimeout(typingAnimation);
-  if (marketDataInterval) clearInterval(marketDataInterval);
   
   // Return to home
   goToHome();
@@ -2043,70 +1040,65 @@ function forceLogout() {
   document.getElementById('accessExpiredModal').style.display = 'none';
 }
 
-// ===== UPDATED WHOP ACCESS CHECK =====
-function checkWhopAccess() {
+// ===== UPDATED DASHBOARD ACCESS FLOW =====
+function checkDashboardAccess() {
   console.log("Dashboard clicked - checking access...");
   
-  // First check if we have a valid session and username
-  if (checkSession() && getStoredUsername()) {
+  // First check if we have a valid session
+  if (checkSession()) {
     console.log("Valid session found, showing dashboard");
-    currentUsername = getStoredUsername();
     showDashboard();
     return true;
   }
   
-  // No valid session, check Whop access
-  const urlParams = new URLSearchParams(window.location.search);
-  const hasWhopToken = urlParams.get('whop_token') || 
-                       urlParams.get('access_key') ||
-                       urlParams.get('whop_user');
-  
-  const referrer = document.referrer;
-  const isFromWhop = referrer.includes('whop.com') || 
-                    referrer.includes('whop.io') ||
-                    referrer.includes('whop.gg');
-  
-  let isInIframe = false;
-  try {
-    isInIframe = window.self !== window.top;
-  } catch (e) {
-    isInIframe = true;
-  }
-  
-  // Grant access if coming from Whop
-  if (hasWhopToken || isFromWhop || isInIframe) {
-    console.log("Whop access detected");
-    
-    // Check if we have a stored username
-    const storedUsername = getStoredUsername();
-    if (storedUsername) {
-      // We have username, create session and show dashboard
-      currentUsername = storedUsername;
-      createSecureSession();
-      
-      // Clean URL parameters
-      const cleanUrl = window.location.origin + window.location.pathname;
-      window.history.replaceState({}, document.title, cleanUrl);
-      
-      showDashboard();
-    } else {
-      // No username stored, show username modal
-      showUsernameModal();
-    }
-    return true;
-  }
-  
-  // No access
-  console.log("No Whop access found, showing denial modal");
-  showAccessDenied();
+  // No valid session, show login modal
+  console.log("No session found, showing login modal");
+  showLoginModal();
   return false;
+}
+
+// ===== LOGIN MODAL FUNCTIONS =====
+function showLoginModal() {
+  document.getElementById('loginModal').style.display = 'flex';
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').style.display = 'none';
+}
+
+function processLogin() {
+  const userName = document.getElementById('userName').value.trim();
+  const accessCode = document.getElementById('accessCode').value.trim();
+  
+  if (!userName) {
+    alert("Please enter your name");
+    return;
+  }
+  
+  // Check for valid access code if provided
+  if (accessCode) {
+    // Add your access code validation logic here
+    const validCodes = ["EON2024", "BETAACCESS", "TRADERPRO"]; // Example valid codes
+    if (!validCodes.includes(accessCode.toUpperCase())) {
+      alert("Invalid access code. Please try again or leave it blank.");
+      return;
+    }
+  }
+  
+  // Create session with user's name
+  createSecureSession(userName);
+  
+  // Close login modal
+  closeLoginModal();
+  
+  // Show dashboard
+  showDashboard();
 }
 
 // ===== DASHBOARD FUNCTIONS =====
 function showDashboard() {
-  if (!checkSession() && !currentUsername) {
-    console.log("No username or session, showing username modal");
-    showUsernameModal();
+  if (!checkSession()) {
+    console.log("Session check failed, not showing dashboard");
     return;
   }
   
@@ -2120,24 +1112,20 @@ function showDashboard() {
   document.getElementById('featuresTab').style.display = 'none';
   document.getElementById('pricingTab').style.display = 'none';
   
-  // Update username display
-  updateUsernameDisplay();
-  
-  // Start typing animation
-  startTypingAnimation();
+  // Update welcome message with user's name
+  const userName = localStorage.getItem('eon_user_name') || 'Trader';
+  const welcomeMessage = document.querySelector('.welcome-message');
+  if (welcomeMessage) {
+    welcomeMessage.innerHTML = `Welcome back, <strong>${userName}</strong>! Professional trading tools and AI-powered analysis at your fingertips. Real-time signals, portfolio tracking, and market insights.`;
+  }
   
   // Start session timer
   startSessionTimer();
-  
-  // Start market data updates
-  updateMarketData();
-  marketDataInterval = setInterval(updateMarketData, 30000); // Update every 30 seconds
   
   // Start security checks
   securityCheckInterval = setInterval(() => {
     if (!checkSession()) {
       clearInterval(securityCheckInterval);
-      clearInterval(marketDataInterval);
     }
   }, SECURITY_CONFIG.CHECK_INTERVAL);
   
@@ -2184,16 +1172,13 @@ function startSessionTimer() {
 function goToHome() {
   console.log("Going to home page");
   
-  // Clear timers and animations
+  // Clear timers first
   if (sessionTimer) clearInterval(sessionTimer);
   if (securityCheckInterval) clearInterval(securityCheckInterval);
-  if (typingAnimation) clearTimeout(typingAnimation);
-  if (marketDataInterval) clearInterval(marketDataInterval);
   
   document.getElementById('homePage').style.display = 'block';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('sessionInfo').style.display = 'none';
-  document.getElementById('usernameModal').style.display = 'none';
   
   // Restore tabs
   document.getElementById('dashboardTab').style.display = 'block';
@@ -2204,7 +1189,7 @@ function goToHome() {
 }
 
 function logout() {
-  if (confirm("Are you sure you want to logout? You'll need to enter your username again to access the dashboard.")) {
+  if (confirm("Are you sure you want to logout?")) {
     endSession();
   }
 }
@@ -2259,7 +1244,7 @@ window.addEventListener('load', function() {
   // Setup event listeners
   document.getElementById('dashboardTab').addEventListener('click', function(e) {
     e.preventDefault();
-    checkWhopAccess();
+    checkDashboardAccess();
   });
   
   document.getElementById('buyButton').addEventListener('click', function() {
@@ -2269,38 +1254,61 @@ window.addEventListener('load', function() {
   // Setup sidebar functionality
   setupSidebar();
   
-  // Check for stored username
-  currentUsername = getStoredUsername();
-  
-  // Check for Whop token on load
-  const urlParams = new URLSearchParams(window.location.search);
-  const whopToken = urlParams.get('whop_token');
-  const whopUser = urlParams.get('whop_user');
-  
-  if (whopToken || whopUser) {
-    console.log("Whop access detected on page load");
-    // Clean URL first
-    const cleanUrl = window.location.origin + window.location.pathname;
-    window.history.replaceState({}, document.title, cleanUrl);
-    
-    // If we have a username, create session and show dashboard
-    if (currentUsername) {
-      createSecureSession();
-      setTimeout(() => {
-        showDashboard();
-      }, 500);
-    } else {
-      // Show username modal
-      setTimeout(() => {
-        showUsernameModal();
-      }, 500);
-    }
-  } else if (checkSession() && currentUsername) {
-    // Valid session exists and we have username, show dashboard
+  // Check for existing session on load
+  if (checkSession()) {
+    // Valid session exists, show dashboard
     console.log("Valid session found on load, showing dashboard");
     showDashboard();
   } else {
     console.log("No session found, showing home page");
+  }
+  
+  // Update signals demo
+  setInterval(updateSignals, 10000);
+});
+
+function updateSignals() {
+  const signals = document.querySelectorAll('.signal-price');
+  signals.forEach(signal => {
+    const current = parseFloat(signal.textContent.replace('$', '').replace(',', ''));
+    const change = (Math.random() - 0.5) * 100;
+    const newPrice = current + change;
+    signal.textContent = '$' + newPrice.toFixed(2);
+  });
+}
+
+// ===== MODAL CLOSE HANDLERS =====
+document.getElementById('userNotFoundModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+
+document.getElementById('accessExpiredModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    forceLogout();
+  }
+});
+
+document.getElementById('loginModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeLoginModal();
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModal();
+    document.getElementById('accessExpiredModal').style.display = 'none';
+    closeLoginModal();
+  }
+});
+
+// ===== ENTER KEY FOR LOGIN FORM =====
+document.getElementById('loginForm').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    processLogin();
   }
 });
 </script>
