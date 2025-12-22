@@ -736,7 +736,7 @@ html, body {
   }
 }
 
-/* Typing Animation Container */
+/* ===== TYPING ANIMATION - FIXED ===== */
 .typing-container {
   display: flex;
   align-items: center;
@@ -775,8 +775,14 @@ html, body {
 .typing-text-container {
   position: relative;
   flex: 1;
-  min-height: 28px;
   display: flex;
+  align-items: center;
+  min-height: 28px;
+}
+
+.typing-text-wrapper {
+  position: relative;
+  display: inline-flex;
   align-items: center;
 }
 
@@ -795,10 +801,9 @@ html, body {
   background: #5DD62C;
   animation: blink 1s infinite;
   box-shadow: 0 0 10px #5DD62C;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-left: 2px;
+  position: relative;
+  top: 0;
 }
 
 @keyframes blink {
@@ -1282,12 +1287,14 @@ html, body {
           </div>
         </div>
         
-        <!-- Typing Animation -->
+        <!-- Typing Animation - Fixed Structure -->
         <div class="typing-container">
           <div class="new-badge">NEW</div>
           <div class="typing-text-container">
-            <span class="typing-text" id="typingText"></span>
-            <span class="typing-cursor"></span>
+            <div class="typing-text-wrapper">
+              <span class="typing-text" id="typingText"></span>
+              <span class="typing-cursor"></span>
+            </div>
           </div>
         </div>
         
@@ -1540,7 +1547,7 @@ function updateUsernameDisplay() {
   }
 }
 
-// ===== TYPING ANIMATION - FIXED =====
+// ===== TYPING ANIMATION - FIXED VERSION =====
 function startTypingAnimation() {
   const typingText = document.getElementById('typingText');
   const cursor = document.querySelector('.typing-cursor');
