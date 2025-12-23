@@ -1212,7 +1212,11 @@ html, body {
 .loading-section {
   display: none;
   text-align: center;
-  padding: 40px 0;
+  padding: 100px 0;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  border: 2px solid rgba(93,214,44,0.2);
 }
 
 .loader-wrapper {
@@ -1276,6 +1280,8 @@ html, body {
   z-index: 1;
   border-radius: 50ch;
   border: none;
+  color: #0f0f0f;
+  font-weight: 600;
 }
 
 .loader-letter:nth-child(1) {
@@ -1307,6 +1313,12 @@ html, body {
 }
 .loader-letter:nth-child(10) {
   animation-delay: 0.9s;
+}
+.loader-letter:nth-child(11) {
+  animation-delay: 1.0s;
+}
+.loader-letter:nth-child(12) {
+  animation-delay: 1.1s;
 }
 
 @keyframes loader-letter-anim {
@@ -1469,6 +1481,14 @@ html, body {
   padding: 12px 18px;
   width: 150px;
   height: 60px;
+  opacity: 1;
+}
+.animated-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.animated-button:disabled:hover {
+  transform: none;
 }
 .animated-button::before,
 .animated-button::after {
@@ -1496,7 +1516,7 @@ html, body {
     ),
     linear-gradient(0deg, #5af85d, #7af85a);
 }
-.animated-button:active {
+.animated-button:active:not(:disabled) {
   transform: scale(0.95);
 }
 
@@ -1529,7 +1549,7 @@ html, body {
   background-color: #e8e8e8;
   pointer-events: none;
 }
-.animated-button:hover .fold {
+.animated-button:not(:disabled):hover .fold {
   margin-top: -1rem;
   margin-right: -1rem;
 }
@@ -1648,7 +1668,7 @@ html, body {
 .animated-button:focus svg.icon {
   fill: white;
 }
-.animated-button:hover svg.icon {
+.animated-button:not(:disabled):hover svg.icon {
   fill: transparent;
   animation:
     dasharray 1s linear forwards,
@@ -1931,12 +1951,13 @@ html, body {
 <!-- AI Analysis Page -->
 <div id="aiAnalysisPage">
   <div class="ai-analysis-content">
-    <div class="ai-analysis-header">
+    <div class="ai-analysis-header" id="analysisHeader">
       <h1>AI Chart Analysis</h1>
       <p>Upload a screenshot of your stock chart and let our AI analyze patterns, predict trends, and provide actionable insights.</p>
     </div>
 
-    <div class="upload-section">
+    <!-- Upload Section (Initially shown) -->
+    <div class="upload-section" id="uploadSection">
       <div class="upload-area">
         <div class="upload-box" id="uploadBox">
           <div class="upload-icon">
@@ -1988,8 +2009,9 @@ html, body {
       </div>
     </div>
 
-    <div class="analyze-button-container">
-      <button type="button" class="animated-button" id="analyzeButton" onclick="analyzeChart()">
+    <!-- Analyze Button (Initially shown) -->
+    <div class="analyze-button-container" id="analyzeButtonContainer">
+      <button type="button" class="animated-button" id="analyzeButton" onclick="startAnalysis()" disabled>
         <span class="fold"></span>
 
         <div class="points_wrapper">
@@ -2024,7 +2046,7 @@ html, body {
       </button>
     </div>
 
-    <!-- Loading Animation -->
+    <!-- Loading Animation (Initially hidden) -->
     <div class="loading-section" id="loadingSection">
       <div class="loader-wrapper">
         <span class="loader-letter">A</span>
@@ -2042,10 +2064,10 @@ html, body {
 
         <div class="loader"></div>
       </div>
-      <p style="margin-top: 30px; color: #666; font-size: 16px;">AI is analyzing your chart pattern...</p>
+      <p style="margin-top: 30px; color: #666; font-size: 16px;">AI is analyzing your chart pattern. This may take a moment...</p>
     </div>
 
-    <!-- Analysis Results -->
+    <!-- Analysis Results (Initially hidden) -->
     <div class="analysis-results" id="analysisResults">
       <div class="results-header">
         <h2>Analysis Complete</h2>
@@ -2084,7 +2106,15 @@ html, body {
       </div>
 
       <div style="text-align: center; margin-top: 40px;">
-        <button class="back-button" onclick="goBackToDashboard()">
+        <button class="back-button" onclick="resetAnalysis()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Analyze Another Chart
+        </button>
+        <button class="back-button" onclick="goBackToDashboard()" style="margin-left: 15px; background: transparent; border-color: #666; color: #666;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M19 12H5"/>
             <path d="M12 19l-7-7 7-7"/>
@@ -2751,6 +2781,9 @@ function showAiAnalysisPage() {
   document.getElementById('aiAnalysisPage').style.display = 'block';
   document.getElementById('homePage').style.display = 'none';
   
+  // Reset analysis state
+  resetAnalysis();
+  
   // Update sidebar active state
   document.querySelectorAll('.sidebar-tab').forEach(tab => {
     tab.classList.remove('active');
@@ -2832,8 +2865,6 @@ function setupImageUpload() {
       previewImage.src = e.target.result;
       imagePreview.style.display = 'block';
       analyzeButton.disabled = false;
-      analyzeButton.style.opacity = '1';
-      analyzeButton.style.cursor = 'pointer';
     };
     reader.readAsDataURL(file);
   }
@@ -2843,30 +2874,33 @@ function removeImage() {
   selectedImage = null;
   document.getElementById('imagePreview').style.display = 'none';
   document.getElementById('imageInput').value = '';
-  const analyzeButton = document.getElementById('analyzeButton');
-  analyzeButton.disabled = true;
-  analyzeButton.style.opacity = '0.5';
-  analyzeButton.style.cursor = 'not-allowed';
+  document.getElementById('analyzeButton').disabled = true;
 }
 
 // ===== CHART ANALYSIS FUNCTIONALITY =====
-function analyzeChart() {
+function startAnalysis() {
   if (!selectedImage) {
     alert('Please upload an image first.');
     return;
   }
   
+  console.log("Starting analysis...");
+  
+  // Hide everything except loading
+  document.getElementById('analysisHeader').style.display = 'none';
+  document.getElementById('uploadSection').style.display = 'none';
+  document.getElementById('analyzeButtonContainer').style.display = 'none';
+  document.getElementById('analysisResults').style.display = 'none';
+  
   // Show loading animation
   document.getElementById('loadingSection').style.display = 'block';
-  document.getElementById('analysisResults').style.display = 'none';
-  document.getElementById('analyzeButton').style.display = 'none';
   
   // Simulate AI analysis (in a real app, this would be an API call)
   setTimeout(() => {
     // Generate random but realistic analysis results
-    const patterns = ['Bullish Flag', 'Head & Shoulders', 'Double Bottom', 'Ascending Triangle', 'Cup & Handle'];
+    const patterns = ['Bullish Flag', 'Head & Shoulders', 'Double Bottom', 'Ascending Triangle', 'Cup & Handle', 'Falling Wedge', 'Rising Wedge'];
     const trends = ['Upward', 'Downward', 'Sideways', 'Consolidating'];
-    const predictions = ['+5.2%', '+3.8%', '-2.1%', '+7.5%', '+1.9%'];
+    const predictions = ['+5.2%', '+3.8%', '-2.1%', '+7.5%', '+1.9%', '-4.3%', '+6.7%'];
     const risks = ['Low', 'Medium', 'High'];
     
     const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
@@ -2903,7 +2937,26 @@ function analyzeChart() {
     if (analysisHistory.length > 10) analysisHistory = analysisHistory.slice(0, 10);
     localStorage.setItem('eon_analysis_history', JSON.stringify(analysisHistory));
     
-  }, 3000); // 3 second simulation
+    console.log("Analysis complete:", analysis);
+    
+  }, 3500); // 3.5 second simulation for better UX
+}
+
+function resetAnalysis() {
+  console.log("Resetting analysis...");
+  
+  // Reset all elements to initial state
+  document.getElementById('analysisHeader').style.display = 'block';
+  document.getElementById('uploadSection').style.display = 'block';
+  document.getElementById('analyzeButtonContainer').style.display = 'block';
+  document.getElementById('loadingSection').style.display = 'none';
+  document.getElementById('analysisResults').style.display = 'none';
+  
+  // Clear image
+  removeImage();
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ===== INITIALIZATION =====
