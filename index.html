@@ -188,7 +188,7 @@ html, body {
 
 /* ===== USERNAME MODAL ===== */
 #usernameModal {
-  display: flex;
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -2189,6 +2189,9 @@ function saveUsername() {
   // Hide modal
   document.getElementById('usernameModal').style.display = 'none';
   
+  // Create secure session
+  createSecureSession();
+  
   // Show dashboard
   showDashboard();
 }
@@ -2351,7 +2354,7 @@ function checkSession() {
   
   if (!tokenData || !validateToken(tokenData)) {
     // Session invalid or expired
-    endSession();
+    console.log("Session invalid or expired");
     return false;
   }
   
@@ -2424,9 +2427,12 @@ function checkWhopAccess() {
   console.log("Dashboard clicked - checking access...");
   
   // First check if we have a valid session and username
-  if (checkSession() && getStoredUsername()) {
+  const tokenData = JSON.parse(localStorage.getItem('eon_session_token') || 'null');
+  const storedUsername = getStoredUsername();
+  
+  if (tokenData && validateToken(tokenData) && storedUsername) {
     console.log("Valid session found, showing dashboard");
-    currentUsername = getStoredUsername();
+    currentUsername = storedUsername;
     showDashboard();
     return true;
   }
@@ -2454,7 +2460,6 @@ function checkWhopAccess() {
     console.log("Whop access detected");
     
     // Check if we have a stored username
-    const storedUsername = getStoredUsername();
     if (storedUsername) {
       // We have username, create session and show dashboard
       currentUsername = storedUsername;
@@ -2480,22 +2485,23 @@ function checkWhopAccess() {
 
 // ===== DASHBOARD FUNCTIONS =====
 function showDashboard() {
-  if (!checkSession() && !currentUsername) {
-    console.log("No username or session, showing username modal");
-    showUsernameModal();
-    return;
-  }
-  
   console.log("Showing dashboard");
+  
+  // Hide all other pages
   document.getElementById('homePage').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   document.getElementById('aiAnalysisPage').style.display = 'none';
   document.getElementById('sessionInfo').style.display = 'flex';
   
-  // Update tab
+  // Hide modals
+  document.getElementById('usernameModal').style.display = 'none';
+  document.getElementById('userNotFoundModal').style.display = 'none';
+  document.getElementById('accessExpiredModal').style.display = 'none';
+  
+  // Update tab visibility
   document.getElementById('dashboardTab').style.display = 'none';
-  document.getElementById('featuresTab').style.display = 'none';
-  document.getElementById('pricingTab').style.display = 'none';
+  document.getElementById('featuresTab').style.display = 'block';
+  document.getElementById('pricingTab').style.display = 'block';
   
   // Update username display
   updateUsernameDisplay();
@@ -2507,6 +2513,7 @@ function showDashboard() {
   startSessionTimer();
   
   // Start security checks
+  if (securityCheckInterval) clearInterval(securityCheckInterval);
   securityCheckInterval = setInterval(() => {
     if (!checkSession()) {
       clearInterval(securityCheckInterval);
@@ -2731,6 +2738,8 @@ function goToHome() {
   document.getElementById('aiAnalysisPage').style.display = 'none';
   document.getElementById('sessionInfo').style.display = 'none';
   document.getElementById('usernameModal').style.display = 'none';
+  document.getElementById('userNotFoundModal').style.display = 'none';
+  document.getElementById('accessExpiredModal').style.display = 'none';
   
   // Restore tabs
   document.getElementById('dashboardTab').style.display = 'block';
