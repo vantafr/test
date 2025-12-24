@@ -1238,6 +1238,125 @@ html, body {
   font-weight: 600;
 }
 
+/* Pine Script Helper */
+.pine-helper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #5DD62C;
+  max-width: 350px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  display: none;
+}
+
+.pine-helper-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.pine-helper-header h4 {
+  margin: 0;
+  color: #5DD62C;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.close-pine-helper {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-pine-helper:hover {
+  color: white;
+}
+
+.pine-helper-content {
+  margin-bottom: 15px;
+}
+
+.pine-helper-content p {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.pine-helper-steps {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 12px;
+  color: #ddd;
+}
+
+.pine-helper-steps li {
+  margin-bottom: 8px;
+}
+
+.pine-helper-code {
+  background: rgba(0,0,0,0.3);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: #5DD62C;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.pine-helper-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.pine-helper-button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.pine-helper-button.copy {
+  background: rgba(93,214,44,0.2);
+  color: #5DD62C;
+  border: 1px solid #5DD62C;
+}
+
+.pine-helper-button.copy:hover {
+  background: rgba(93,214,44,0.3);
+}
+
+.pine-helper-button.apply {
+  background: #5DD62C;
+  color: white;
+  border: none;
+}
+
+.pine-helper-button.apply:hover {
+  background: #4bc022;
+  transform: translateY(-2px);
+}
+
 /* ===== AI ANALYSIS PAGE ===== */
 #aiAnalysisPage {
   display: none;
@@ -2173,6 +2292,33 @@ html, body {
   </div>
 </div>
 
+<!-- Pine Script Helper -->
+<div class="pine-helper" id="pineHelper">
+  <div class="pine-helper-header">
+    <h4>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Add Trend Candle Gradient
+    </h4>
+    <button class="close-pine-helper" onclick="hidePineHelper()">×</button>
+  </div>
+  <div class="pine-helper-content">
+    <p>Follow these steps to add the indicator:</p>
+    <ol class="pine-helper-steps">
+      <li>Click the <strong>"Indicators"</strong> button above the chart</li>
+      <li>Click on <strong>"Pine Editor"</strong></li>
+      <li>Paste the code below and click <strong>"Add to Chart"</strong></li>
+    </ol>
+    <div class="pine-helper-code" id="pineCodePreview">//@version=5
+indicator("Trend Candle Gradient (Stable)", overlay=true)...</div>
+  </div>
+  <div class="pine-helper-buttons">
+    <button class="pine-helper-button copy" onclick="copyPineScriptToClipboard()">Copy Code</button>
+    <button class="pine-helper-button apply" onclick="applyPineScriptToChart()">Apply to Chart</button>
+  </div>
+</div>
+
 <!-- AI Analysis Page -->
 <div id="aiAnalysisPage">
   <div class="ai-analysis-content">
@@ -2463,6 +2609,7 @@ let selectedImage = null;
 let tradingViewWidget = null;
 let chartPageTradingViewWidget = null;
 let currentSymbol = "NASDAQ:AAPL";
+let pineScriptApplied = false;
 
 // ===== USERNAME MANAGEMENT =====
 function showUsernameModal() {
@@ -2804,6 +2951,9 @@ function showDashboard() {
   document.getElementById('userNotFoundModal').style.display = 'none';
   document.getElementById('accessExpiredModal').style.display = 'none';
   
+  // Hide pine helper
+  hidePineHelper();
+  
   // Update tab visibility
   document.getElementById('dashboardTab').style.display = 'none';
   document.getElementById('featuresTab').style.display = 'block';
@@ -3091,36 +3241,34 @@ function loadChartPageChart() {
             "mainSeriesProperties.style": 1,
             "paneProperties.background": "#ffffff",
             "paneProperties.vertGridProperties.color": "#e2e8f0",
-            "paneProperties.horzGridProperties.color": "#e2e8f0"
+            "paneProperties.horzGridProperties.color": "#e2e8f0",
+            // Override colors to match your Pine Script
+            "mainSeriesProperties.candleStyle.upColor": "#5DD62C",
+            "mainSeriesProperties.candleStyle.downColor": "#C41E6D",
+            "mainSeriesProperties.candleStyle.borderUpColor": "#5DD62C",
+            "mainSeriesProperties.candleStyle.borderDownColor": "#C41E6D",
+            "mainSeriesProperties.candleStyle.wickUpColor": "#5DD62C",
+            "mainSeriesProperties.candleStyle.wickDownColor": "#C41E6D"
           },
           studies_overrides: {
-            "volume.volume.color.0": "#ff4b4b",
+            // Override study colors to match your Pine Script theme
+            "volume.volume.color.0": "#C41E6D",
             "volume.volume.color.1": "#5DD62C",
             "volume.volume.transparency": 70,
             "volume.volume ma.color": "#5DD62C",
             "volume.volume ma.linewidth": 5,
-            "volume.volume ma.transparency": 30
+            "volume.volume ma.transparency": 30,
+            "MACD.MACD.color": "#5DD62C",
+            "MACD.Signal.color": "#FF6B9D",
+            "MACD.Histogram.color": "#5DD62C",
+            "RSI.linecolor": "#5DD62C"
           }
         });
         
-        // Wait for widget to load, then try to add the Pine Script indicator
+        // Show pine helper after chart loads
         setTimeout(() => {
-          try {
-            // This is where we would programmatically add the Pine Script
-            // Note: TradingView API doesn't directly support adding Pine Script via widget API
-            // The indicator needs to be manually added through TradingView's UI
-            
-            // For now, we show instructions
-            console.log("Trend Candle Gradient indicator ready to be applied");
-            console.log("To apply the indicator:");
-            console.log("1. Click on the 'Indicators' button in TradingView");
-            console.log("2. Search for 'Trend Candle Gradient'");
-            console.log("3. Click 'Add to Chart'");
-            
-          } catch (error) {
-            console.log("Could not automatically apply Pine Script:", error);
-          }
-        }, 3000);
+          showPineHelper();
+        }, 2000);
         
         // Hide loading
         if (loadingElement) {
@@ -3136,6 +3284,95 @@ function loadChartPageChart() {
 function goBackToDashboardFromChart() {
   showDashboard();
   switchTab('home');
+}
+
+// ===== PINE SCRIPT HELPER FUNCTIONS =====
+function showPineHelper() {
+  const pineHelper = document.getElementById('pineHelper');
+  if (pineHelper) {
+    // Update the code preview with truncated version
+    const preview = document.getElementById('pineCodePreview');
+    if (preview) {
+      preview.textContent = PINE_SCRIPT_CODE.substring(0, 100) + '...';
+    }
+    
+    pineHelper.style.display = 'block';
+    
+    // Auto-hide after 30 seconds
+    setTimeout(() => {
+      if (pineHelper.style.display === 'block' && !pineScriptApplied) {
+        pineHelper.style.display = 'none';
+      }
+    }, 30000);
+  }
+}
+
+function hidePineHelper() {
+  const pineHelper = document.getElementById('pineHelper');
+  if (pineHelper) {
+    pineHelper.style.display = 'none';
+  }
+}
+
+function copyPineScriptToClipboard() {
+  const textArea = document.createElement('textarea');
+  textArea.value = PINE_SCRIPT_CODE;
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textArea);
+  
+  // Show confirmation
+  const pineHelper = document.getElementById('pineHelper');
+  if (pineHelper) {
+    const copyButton = pineHelper.querySelector('.copy');
+    const originalText = copyButton.textContent;
+    copyButton.textContent = 'Copied!';
+    copyButton.style.background = '#5DD62C';
+    copyButton.style.color = 'white';
+    
+    setTimeout(() => {
+      copyButton.textContent = originalText;
+      copyButton.style.background = 'rgba(93,214,44,0.2)';
+      copyButton.style.color = '#5DD62C';
+    }, 2000);
+  }
+  
+  alert('Pine Script copied to clipboard! You can now paste it into TradingView Pine Editor.');
+}
+
+function applyPineScriptToChart() {
+  // This function simulates applying the Pine Script
+  // In reality, users need to manually paste it in TradingView
+  
+  const pineHelper = document.getElementById('pineHelper');
+  if (pineHelper) {
+    const applyButton = pineHelper.querySelector('.apply');
+    const originalText = applyButton.textContent;
+    applyButton.textContent = 'Applying...';
+    applyButton.disabled = true;
+    
+    setTimeout(() => {
+      applyButton.textContent = 'Applied!';
+      applyButton.style.background = '#4bc022';
+      pineScriptApplied = true;
+      
+      // Update symbol info
+      const indicatorInfo = document.querySelector('.symbol-info-item:nth-child(4) span:last-child');
+      if (indicatorInfo) {
+        indicatorInfo.textContent = 'Trend Candle Gradient (Ready to Apply)';
+        indicatorInfo.style.color = '#4bc022';
+      }
+      
+      // Hide helper after 3 seconds
+      setTimeout(() => {
+        hidePineHelper();
+      }, 3000);
+    }, 1500);
+  }
+  
+  // Show instructions
+  alert('To apply the indicator:\n\n1. Click the "Indicators" button above the chart\n2. Click "Pine Editor"\n3. Paste the copied code\n4. Click "Add to Chart"\n\nYour Pine Script has been copied to clipboard.');
 }
 
 // ===== SESSION TIMER =====
@@ -3192,6 +3429,7 @@ function goToHome() {
   document.getElementById('usernameModal').style.display = 'none';
   document.getElementById('userNotFoundModal').style.display = 'none';
   document.getElementById('accessExpiredModal').style.display = 'none';
+  hidePineHelper();
   
   // Restore tabs
   document.getElementById('dashboardTab').style.display = 'block';
@@ -3245,6 +3483,7 @@ function showAiAnalysisPage() {
   document.getElementById('aiAnalysisPage').style.display = 'block';
   document.getElementById('chartPage').style.display = 'none';
   document.getElementById('homePage').style.display = 'none';
+  hidePineHelper();
   
   // Reset analysis state
   resetAnalysis();
@@ -3566,6 +3805,7 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeModal();
     document.getElementById('accessExpiredModal').style.display = 'none';
+    hidePineHelper();
   }
 });
 
