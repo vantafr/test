@@ -1747,6 +1747,227 @@ html, body {
   margin: 20px 0;
 }
 
+/* ===== TRADINGVIEW CHART TAB ===== */
+.chart-search-container {
+  margin-bottom: 30px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.search-box {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 15px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #5DD62C;
+  box-shadow: 0 0 0 3px rgba(93,214,44,0.1);
+}
+
+.search-button {
+  background: linear-gradient(90deg, #5DD62C, #a6ff75);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.search-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(93,214,44,0.3);
+}
+
+.tradingview-chart-container {
+  height: 650px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.pine-editor-container {
+  margin-top: 30px;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.pine-editor-header {
+  background: rgba(93,214,44,0.1);
+  padding: 20px 30px;
+  border-bottom: 1px solid rgba(93,214,44,0.2);
+}
+
+.pine-editor-header h3 {
+  color: white;
+  margin: 0;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pine-editor-header h3 svg {
+  width: 20px;
+  height: 20px;
+  stroke: #5DD62C;
+}
+
+.pine-editor-content {
+  padding: 30px;
+}
+
+.pine-code-container {
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.pine-code-header {
+  background: rgba(0,0,0,0.3);
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pine-code-header span {
+  color: #aaa;
+  font-size: 14px;
+  font-family: 'Courier New', monospace;
+}
+
+.copy-button {
+  background: rgba(93,214,44,0.2);
+  color: #5DD62C;
+  border: 1px solid #5DD62C;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.copy-button:hover {
+  background: #5DD62C;
+  color: #0f0f0f;
+}
+
+.pine-code {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e0e0e0;
+  tab-size: 2;
+  white-space: pre;
+}
+
+.pine-code::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pine-code::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.3);
+}
+
+.pine-code::-webkit-scrollbar-thumb {
+  background: #5DD62C;
+  border-radius: 4px;
+}
+
+.pine-note {
+  background: rgba(93,214,44,0.1);
+  border-left: 4px solid #5DD62C;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pine-note strong {
+  color: #5DD62C;
+}
+
+.chart-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15,15,15,0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  color: white;
+}
+
+.chart-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(93,214,44,0.3);
+  border-radius: 50%;
+  border-top-color: #5DD62C;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.symbol-info {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.symbol-info-item {
+  background: rgba(93,214,44,0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.symbol-info-item span:first-child {
+  color: #aaa;
+  margin-right: 10px;
+}
+
+.symbol-info-item span:last-child {
+  color: #5DD62C;
+  font-weight: 600;
+}
+
 /* ===== UTILITY ===== */
 #sessionInfo {
   margin-left: auto;
@@ -1848,11 +2069,11 @@ html, body {
           </svg>
           Signals
         </a>
-        <a href="#" class="sidebar-tab" data-tab="charts">
+        <a href="#" class="sidebar-tab" data-tab="chart" onclick="switchTab('chart')">
           <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 3v18h18M7 16l4-4 4 4 6-6"/>
           </svg>
-          Charts
+          Chart
         </a>
         <a href="#" class="sidebar-tab" data-tab="portfolio">
           <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2153,11 +2374,90 @@ const SECURITY_CONFIG = {
   TOKEN_SALT: "eon_secure_2024_" + btoa(window.location.hostname).slice(0, 10)
 };
 
+// ===== PINE SCRIPT CODE =====
+const PINE_SCRIPT_CODE = `//@version=5
+indicator("Trend Candle Gradient (Stable)", overlay=true)
+
+// ===============================
+// MODE SELECTOR
+// ===============================
+
+tradeMode = input.string("Smart Day Trade", "Trading Mode", options=["Smart Day Trade", "Swing Trader", "Scalper"])
+confirmBars = tradeMode == "Scalper" ? 0 : tradeMode == "Smart Day Trade" ? 1 : 2
+signalATRMult = tradeMode == "Scalper" ? 0.6 : tradeMode == "Smart Day Trade" ? 1.2 : 2.0
+
+// ===============================
+// INPUTS
+// ===============================
+
+atrLen  = input.int(10)
+atrMult = input.float(3.0)
+
+// ===============================
+// ATR TREND LOGIC
+// ===============================
+
+atr   = ta.atr(atrLen)
+upper = close - atrMult * atr
+lower = close + atrMult * atr
+
+var float trendLine = na
+var bool trendUp = true
+
+trendLine := na(trendLine[1]) ? close : trendUp ? math.max(upper, trendLine[1]) : math.min(lower, trendLine[1])
+trendUp   := close > trendLine ? true : close < trendLine ? false : trendUp[1]
+
+// ===============================
+// COLORS
+// ===============================
+
+bullWeak   = color.rgb(220, 255, 220)
+bullStrong = color.rgb(93, 214, 44)
+bearWeak   = #C41E6D
+bearStrong = #BB207C
+bearPurple = color.rgb(255, 0, 0)
+
+// ===============================
+// COLOR LOGIC
+// ===============================
+
+strength = math.abs(close - trendLine)
+norm = math.min(strength / atr, 2.0)
+
+bearRed   = color.from_gradient(norm, 0, 2.0, bearWeak, bearStrong)
+bearFinal = norm > 1.95 ? bearPurple : bearRed
+candleColor = trendUp ? color.from_gradient(norm, 0, 2.0, bullWeak, bullStrong) : bearFinal
+
+barcolor(candleColor)
+plot(trendLine, color=trendUp ? bullStrong : bearStrong, linewidth=2, style=plot.style_stepline)
+
+// ===============================
+// BUY / SELL SIGNALS
+// ===============================
+
+rawBuy  = trendUp and not trendUp[1]
+rawSell = not trendUp and trendUp[1]
+
+buySignal  = rawBuy  and ta.barssince(rawBuy)  <= confirmBars
+sellSignal = rawSell and ta.barssince(rawSell) <= confirmBars
+
+// ===============================
+// LABELS — SINGLE LINE (NO ERRORS)
+// ===============================
+
+if buySignal
+    label.new(x=bar_index, y=low - atr * signalATRMult, text="BUY", style=label.style_label_up, color=color.new(bullStrong, 0), textcolor=color.white, size=size.small)
+
+if sellSignal
+    label.new(x=bar_index, y=high + atr * signalATRMult, text="SELL", style=label.style_label_down, color=color.new(bearPurple, 0), textcolor=color.white, size=size.small)`;
+
 let sessionTimer = null;
 let securityCheckInterval = null;
 let typingAnimation = null;
 let currentUsername = "";
 let selectedImage = null;
+let tradingViewWidget = null;
+let currentSymbol = "NASDAQ:AAPL";
 
 // ===== USERNAME MANAGEMENT =====
 function showUsernameModal() {
@@ -2223,7 +2523,7 @@ function updateUsernameDisplay() {
   }
 }
 
-// ===== TYPING ANIMATION - COMPLETELY REWRITTEN =====
+// ===== TYPING ANIMATION =====
 function startTypingAnimation() {
   const typingText = document.getElementById('typingText');
   const messages = [
@@ -2662,8 +2962,81 @@ function loadDashboardContent(tabName) {
       `;
       break;
       
+    case 'chart':
+      dashboardContent.innerHTML = `
+        <div class="chart-search-container">
+          <div class="search-box">
+            <input type="text" id="symbolInput" placeholder="Enter stock symbol (e.g., AAPL, TSLA, BTCUSD)" value="NASDAQ:AAPL">
+            <button class="search-button" onclick="loadTradingViewChart()">Load Chart</button>
+            <button class="search-button" onclick="showPineEditor()" style="background: linear-gradient(90deg, #6c5ce7, #a29bfe);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 5px;">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+              Pine Editor
+            </button>
+          </div>
+          <div class="symbol-info">
+            <div class="symbol-info-item">
+              <span>Examples:</span>
+              <span>AAPL, TSLA, MSFT, GOOGL</span>
+            </div>
+            <div class="symbol-info-item">
+              <span>Crypto:</span>
+              <span>BTCUSD, ETHUSD, BNBUSD</span>
+            </div>
+            <div class="symbol-info-item">
+              <span>Forex:</span>
+              <span>EURUSD, GBPUSD, USDJPY</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tradingview-chart-container" id="tradingViewWidget">
+          <div class="chart-loading" id="chartLoading">
+            <div class="chart-spinner"></div>
+            <p>Loading TradingView chart...</p>
+          </div>
+          <!-- TradingView widget will be loaded here -->
+        </div>
+        
+        <div class="pine-editor-container" id="pineEditorContainer" style="display: none;">
+          <div class="pine-editor-header">
+            <h3>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+              Pine Script Editor
+            </h3>
+          </div>
+          <div class="pine-editor-content">
+            <div class="pine-code-container">
+              <div class="pine-code-header">
+                <span>Trend Candle Gradient (Stable) - Pine Script v5</span>
+                <button class="copy-button" onclick="copyPineScript()">Copy Code</button>
+              </div>
+              <pre class="pine-code" id="pineCode">${PINE_SCRIPT_CODE}</pre>
+            </div>
+            <div class="pine-note">
+              <strong>How to use this Pine Script:</strong>
+              <ol style="margin: 10px 0 0 20px; padding-left: 0;">
+                <li>Copy the code above</li>
+                <li>Open TradingView chart</li>
+                <li>Click on "Pine Editor" button</li>
+                <li>Paste the code and click "Add to Chart"</li>
+                <li>The indicator will be applied to your chart</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Load TradingView chart after content is added
+      setTimeout(() => {
+        loadTradingViewChart();
+      }, 100);
+      break;
+      
     case 'signals':
-      // Signals tab content
       dashboardContent.innerHTML = `
         <div class="dashboard-card" style="grid-column: span 2;">
           <div class="card-header">
@@ -2688,6 +3061,114 @@ function loadDashboardContent(tabName) {
   }
 }
 
+// ===== TRADINGVIEW CHART FUNCTIONS =====
+function loadTradingViewChart() {
+  const symbolInput = document.getElementById('symbolInput');
+  const symbol = symbolInput ? symbolInput.value.trim().toUpperCase() : 'NASDAQ:AAPL';
+  
+  // Store current symbol
+  currentSymbol = symbol;
+  
+  // Show loading
+  const widgetContainer = document.getElementById('tradingViewWidget');
+  const loadingElement = document.getElementById('chartLoading');
+  
+  if (loadingElement) {
+    loadingElement.style.display = 'flex';
+  }
+  
+  // Remove existing widget
+  if (tradingViewWidget) {
+    widgetContainer.innerHTML = '';
+  }
+  
+  // Create new widget
+  setTimeout(() => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://s3.tradingview.com/tv.js';
+    script.async = true;
+    script.onload = function() {
+      if (typeof TradingView !== 'undefined') {
+        tradingViewWidget = new TradingView.widget({
+          container_id: 'tradingViewWidget',
+          width: '100%',
+          height: '100%',
+          symbol: symbol.includes(':') ? symbol : `NASDAQ:${symbol}`,
+          interval: 'D',
+          timezone: 'Etc/UTC',
+          theme: 'light',
+          style: '1',
+          locale: 'en',
+          toolbar_bg: '#f1f3f6',
+          enable_publishing: false,
+          allow_symbol_change: true,
+          details: true,
+          calendar: true,
+          studies: [
+            'MACD@tv-basicstudies',
+            'RSI@tv-basicstudies',
+            'Volume@tv-basicstudies'
+          ],
+          show_popup_button: true,
+          popup_width: '1000',
+          popup_height: '650',
+          disabled_features: ["use_localstorage_for_settings"],
+          enabled_features: ["study_templates"],
+          charts_storage_url: 'https://saveload.tradingview.com',
+          charts_storage_api_version: '1.1',
+          client_id: 'tradingview.com',
+          user_id: 'public_user_id',
+          fullscreen: true,
+          autosize: true,
+          loading_screen: { backgroundColor: "#ffffff" }
+        });
+        
+        // Hide loading
+        if (loadingElement) {
+          loadingElement.style.display = 'none';
+        }
+      }
+    };
+    
+    widgetContainer.appendChild(script);
+  }, 500);
+}
+
+function showPineEditor() {
+  const pineEditor = document.getElementById('pineEditorContainer');
+  if (pineEditor) {
+    pineEditor.style.display = 'block';
+    
+    // Scroll to editor
+    pineEditor.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function copyPineScript() {
+  const pineCode = document.getElementById('pineCode');
+  const textArea = document.createElement('textarea');
+  textArea.value = pineCode.textContent;
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textArea);
+  
+  // Show copied notification
+  const copyButton = document.querySelector('.copy-button');
+  const originalText = copyButton.textContent;
+  copyButton.textContent = 'Copied!';
+  copyButton.style.background = '#5DD62C';
+  copyButton.style.color = '#0f0f0f';
+  
+  setTimeout(() => {
+    copyButton.textContent = originalText;
+    copyButton.style.background = 'rgba(93,214,44,0.2)';
+    copyButton.style.color = '#5DD62C';
+  }, 2000);
+}
+
+// ===== SESSION TIMER =====
 function startSessionTimer() {
   const tokenData = JSON.parse(localStorage.getItem('eon_session_token'));
   if (!tokenData) return;
@@ -2778,6 +3259,9 @@ function switchTab(tabName) {
   
   if (tabName === 'ai-analysis') {
     showAiAnalysisPage();
+  } else if (tabName === 'chart') {
+    showDashboard();
+    loadDashboardContent('chart');
   } else {
     showDashboard();
     loadDashboardContent(tabName);
